@@ -116,6 +116,14 @@
           </div>
 		  
 		  <div class="form-group">
+            <label for="nama_diklat" class="col-sm-2 control-label">Nama Diklat</label>
+
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="nama_diklat" name="nama_diklat">
+            </div>
+          </div>
+		  
+		  <div class="form-group">
             <label for="kegiatan" class="col-sm-2 control-label">Kegiatan</label>
 
             <div class="col-sm-10">
@@ -131,19 +139,13 @@
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
-				  <option>4</option>
-				  <option>5</option>
-				  <option>6</option>
-				  <option>7</option>
-				  <option>8</option>
-				  <option>9</option>
                 </select>
               </div>  
           </div>
 
           <datalist id="listWI">
 				<?php while ($row = mysqli_fetch_array($data)) { ?>
-				<option value = "<?php echo $row[0]; ?>">
+				<option value = "<?php echo $row[1]; ?>">
 				<?php } ?>
 			</datalist>
 		

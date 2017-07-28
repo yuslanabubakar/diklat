@@ -99,20 +99,24 @@
                 <tr>
                   <th width="20%">HARI / TANGGAL</th>
                   <th width="15%">WAKTU</th>
-                  <th width="30%">KEGIATAN</th>
+				  <th width="15%">NAMA DIKLAT</th>
+                  <th width="15%">KEGIATAN</th>
 				  <th width="10%">JLH JP</th>
 				  <th width="25%">WIDYAISWARA</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
+					// $data=mysqli_fetch_array($query);
+					// print_r($data);
 				while($data=mysqli_fetch_array($query)){
 					echo "<tr>
-							<td>$data[0] / $data[1]</td>
-							<td>$data[2] - $data[3]</td>
-							<td>$data[4]</td>
-							<td>$data[5]</td>
-							<td>$data[6]</td>
+							<td>$data[hari] / $data[tanggal]</td>
+							<td>$data[waktu_mulai] - $data[waktu_selesai]</td>
+							<td>$data[nama_diklat]</td>
+							<td>$data[kegiatan]</td>
+							<td>$data[jumlah_jp]</td>
+							<td>$data[widyaiswara]</td>
 						</tr>";
 				}
 				?>
