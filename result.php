@@ -4,6 +4,13 @@
 	mysqli_select_db($connection, "");
 	$query=mysqli_query($connection, "SELECT * FROM jadwal");
 	$data = mysqli_query($connection, "SELECT nama FROM pengajar");
+	
+	$widyaiswara = $_POST['widyaiswara'];
+	$pilihan = $_POST['pilihan'];
+	$tahun = date("Y");
+	$tahunbulan = date("Y")."-".date("m");
+	
+	$cek = 0;
 ?>
 <html>
 <style>
@@ -140,18 +147,63 @@
                 </thead>
                 <tbody>
                 <?php
-					// $data=mysqli_fetch_array($query);
-					// print_r($data);
-				while($data=mysqli_fetch_array($query)){
-					echo "<tr>
-							<td>$data[hari] / $data[tanggal]</td>
-							<td>$data[waktu_mulai] - $data[waktu_selesai]</td>
-							<td>$data[nama_diklat]</td>
-							<td>$data[kegiatan]</td>
-							<td>$data[jumlah_jp]</td>
-							<td>$data[widyaiswara]</td>
-						</tr>";
-				}
+					if ($pilihan == "bulan") {
+						$data = mysqli_query($connection , "SELECT * from jadwal where widyaiswara='".$widyaiswara."'");
+						// $cek = 0;
+						while ($dt = mysqli_fetch_array($data)) {
+							if (substr($dt['tanggal'],0,7) == $tahunbulan) {
+								echo "<tr>
+										<td>$dt[hari] / $dt[tanggal]</td>
+										<td>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
+										<td>$dt[nama_diklat]</td>
+										<td>$dt[kegiatan]</td>
+										<td>$dt[jumlah_jp]</td>
+										<td>$dt[widyaiswara]</td>
+									</tr>";
+							}
+							else {
+								$cek = 1;
+								
+							}
+						}
+						if ($cek == 1) {
+							echo "<h1> Data tidak ditemukan </h1>";
+							$cek = 0;
+						}
+					}
+					else if ($pilihan == "tahun") {
+						$data = mysqli_query($connection , "SELECT * from jadwal where widyaiswara='".$widyaiswara."'");
+						// $cek = 0;
+						while ($dt = mysqli_fetch_array($data)) {
+							if (substr($dt['tanggal'],0,4) == "2018") {
+								echo "<tr>
+										<td>$dt[hari] / $dt[tanggal]</td>
+										<td>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
+										<td>$dt[nama_diklat]</td>
+										<td>$dt[kegiatan]</td>
+										<td>$dt[jumlah_jp]</td>
+										<td>$dt[widyaiswara]</td>
+									</tr>";
+							}
+							else {
+								$cek = 1;
+							}
+						}
+						if ($cek == 1) {
+							echo "<h1> Data tidak ditemukan </h1>";
+							$cek = 0;
+						}
+					}
+				// while($data=mysqli_fetch_array($query)){
+					// echo "<tr>
+							// <td>$data[hari] / $data[tanggal]</td>
+							// <td>$data[waktu_mulai] - $data[waktu_selesai]</td>
+							// <td>$data[nama_diklat]</td>
+							// <td>$data[kegiatan]</td>
+							// <td>$data[jumlah_jp]</td>
+							// <td>$data[widyaiswara]</td>
+						// </tr>";
+				// }
 				?>
                 </tbody>
                 <tfoot>

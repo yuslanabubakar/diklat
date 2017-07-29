@@ -19,15 +19,14 @@
 	$getData 	= mysqli_fetch_array($countdata);
 	$cek 		= 1;
 	if ($getData[0] == null) {
-		echo "Ga ada data";
-		// $query = mysqli_query($connection , "INSERT into jadwal (hari,tanggal,waktu_mulai,waktu_selesai,nama_diklat,kegiatan,jumlah_jp,widyaiswara) values ('$hari','$tanggal_db','$waktuMulai','$waktuSelesai','$nama_diklat','$kegiatan','$jp','$wi')");
-		// if ($query) {
-			// header('location: index.php?msg=success');
-		// }
-		// else {
-			// echo mysqli_error($connection);
-			// // header('location: input_jadwal.php?msg=failed');
-		// }		
+		$query = mysqli_query($connection , "INSERT into jadwal (hari,tanggal,waktu_mulai,waktu_selesai,nama_diklat,kegiatan,jumlah_jp,widyaiswara) values ('$hari','$tanggal_db','$waktuMulai','$waktuSelesai','$nama_diklat','$kegiatan','$jp','$wi')");
+		if ($query) {
+			header('location: index.php?msg=success');
+		}
+		else {
+			echo mysqli_error($connection);
+			// header('location: input_jadwal.php?msg=failed');
+		}		
 	} else {
 		$countdata 	= mysqli_query($connection , "SELECT * FROM jadwal WHERE  widyaiswara = '".$wi."'");
 		while($dtCek = mysqli_fetch_array($countdata)) {
