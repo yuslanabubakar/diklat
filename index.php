@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+	define('BASE_URL', 'http://localhost:81/diklat/');
 	$connection=mysqli_connect("127.0.0.1", "root", "", "diklatmedan");
 	mysqli_select_db($connection, "");
 	$query=mysqli_query($connection, "SELECT * FROM jadwal order by tanggal desc, waktu_mulai");
@@ -130,12 +131,13 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th width="20%">HARI / TANGGAL</th>
-                  <th width="15%">WAKTU</th>
-				  <th width="15%">NAMA DIKLAT</th>
-                  <th width="15%">KEGIATAN</th>
-				  <th width="10%">JLH JP</th>
-				  <th width="25%">WIDYAISWARA</th>
+                  <th align='center' width="20%">HARI / TANGGAL</th>
+                  <th align='center' width="15%">WAKTU</th>
+				  <th align='center' width="15%">NAMA DIKLAT</th>
+                  <th align='center' width="15%">KEGIATAN</th>
+				  <th align='center' width="10%">JLH JP</th>
+				  <th align='center' width="25%">WIDYAISWARA</th>
+				  <th align='center' width="15%">AKSI</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -143,14 +145,25 @@
 					// $data=mysqli_fetch_array($query);
 					// print_r($data);
 				while($data=mysqli_fetch_array($query)){
-					echo "<tr>
-							<td>$data[hari] / $data[tanggal]</td>
-							<td>$data[waktu_mulai] - $data[waktu_selesai]</td>
-							<td>$data[nama_diklat]</td>
-							<td>$data[kegiatan]</td>
-							<td>$data[jumlah_jp]</td>
-							<td>$data[widyaiswara]</td>
-						</tr>";
+				?>
+							<tr>
+							<td align='center'><?php echo $data['hari'] . '/' . $data['tanggal']; ?></td>
+							<td align='center'><?php echo $data['waktu_mulai'] . '-' . $data['waktu_selesai']; ?></td>
+							<td align='center'><?php echo $data['nama_diklat']; ?></td>
+							<td align='center'><?php echo $data['kegiatan']; ?></td>
+							<td align='center'><?php echo $data['jumlah_jp']; ?></td>
+							<td align='center'><?php echo $data['widyaiswara']; ?></td>
+							<td align='center'>
+								<a href='<?php echo BASE_URL; ?>' class='btn btn-alert'>
+								<i class='glyphicon glyphicon-trash'></i>
+								</a>
+								
+								<a href='#' class='btn btn-alert'>
+								<i class='glyphicon glyphicon-edit'></i>
+								</a>
+							</td>
+						</tr>
+				<?php
 				}
 				?>
                 </tbody>

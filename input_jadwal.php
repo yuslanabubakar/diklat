@@ -95,7 +95,7 @@
             <label for="inputTanggal" class="col-sm-2 control-label"><span align="left">Tanggal</span></label>
 
             <div class="col-sm-10">
-              <input type="date" class="form-control" id="inputTanggal" name="inputTanggal">
+              <input type="date" class="form-control" id="inputTanggal" name="inputTanggal" required>
             </div>
           </div>
 
@@ -103,7 +103,7 @@
             <label for="inputMulai" class="col-sm-2 control-label">Waktu Mulai</label>
 
             <div class="col-sm-10">
-              <input type="time" class="form-control" id="inputMulai" name="inputMulai">
+              <input type="time" class="form-control" id="inputMulai" name="inputMulai" required>
             </div>
           </div>
 
@@ -111,7 +111,7 @@
             <label for="inputSelesai" class="col-sm-2 control-label">Waktu Selesai</label>
 
             <div class="col-sm-10">
-              <input type="time" class="form-control" id="inputSelesai" name="inputSelesai">
+              <input type="time" class="form-control" id="inputSelesai" name="inputSelesai" required>
             </div>
           </div>
 		  
@@ -127,14 +127,14 @@
             <label for="kegiatan" class="col-sm-2 control-label">Kegiatan</label>
 
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="kegiatan" name="kegiatan">
+              <input type="text" class="form-control" id="kegiatan" name="kegiatan" required>
             </div>
           </div>
 
           <div class="form-group">
             <label for="inputJP" class="col-sm-2 control-label"><span align="left">Jumlah JP</span></label>
               <div class="col-sm-10">
-                <select class="form-control" id="listJP" name="listJP">
+                <select class="form-control" id="listJP" name="listJP" required>
                   <option></option>
                   <option>1</option>
                   <option>2</option>
@@ -153,7 +153,7 @@
               <label for="inputWI" class="col-sm-2 control-label">WidyaIswara</label>
 			
               <div class="col-sm-10">
-                <input type="text" class="form-control" name="inputWI" id="inputWI" list="listWI"/>
+                <input type="text" class="form-control" name="inputWI" id="inputWI" list="listWI" required/>
               </div>
             </div>
           

@@ -143,7 +143,7 @@
                   <th width="15%">KEGIATAN</th>
 				  <th width="10%">JLH JP</th>
 				  <th width="25%">WIDYAISWARA</th>
-				  
+				  <th width="15%">AKSI</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -168,6 +168,15 @@
 											<td>$dt[kegiatan]</td>
 											<td>$dt[jumlah_jp]</td>
 											<td>$dt[widyaiswara]</td>
+											<td>
+												<a href='#' class='btn btn-alert'>
+												<i class='glyphicon glyphicon-trash'></i>
+												</a>
+												
+												<a href='#' class='btn btn-alert'>
+												<i class='glyphicon glyphicon-edit'></i>
+												</a>
+											</td>
 										</tr>";
 									$total = $total + $dt['jumlah_jp'];
 									$totalData = $totalData + 1;
@@ -200,6 +209,15 @@
 											<td>$dt[kegiatan]</td>
 											<td>$dt[jumlah_jp]</td>
 											<td>$dt[widyaiswara]</td>
+											<td>
+												<a href='#' class='btn btn-alert'>
+												<i class='glyphicon glyphicon-trash'></i>
+												</a>
+												
+												<a href='#' class='btn btn-alert'>
+												<i class='glyphicon glyphicon-edit'></i>
+												</a>
+											</td>
 										</tr>";
 									$total = $total + $dt['jumlah_jp'];
 									$totalData = $totalData + 1;
@@ -212,16 +230,6 @@
 							}
 						}
 					}
-				// while($data=mysqli_fetch_array($query)){
-					// echo "<tr>
-							// <td>$data[hari] / $data[tanggal]</td>
-							// <td>$data[waktu_mulai] - $data[waktu_selesai]</td>
-							// <td>$data[nama_diklat]</td>
-							// <td>$data[kegiatan]</td>
-							// <td>$data[jumlah_jp]</td>
-							// <td>$data[widyaiswara]</td>
-						// </tr>";
-				// }
 				?>
 				<th colspan="4"> Total JP</th>
 				<th><?php echo $total ?> </th>
