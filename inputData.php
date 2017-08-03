@@ -15,7 +15,7 @@
 	$jp = mysql_real_escape_string($_POST['listJP']);
 	$wi = mysql_real_escape_string($_POST['inputWI']);
 				
-	$countdata 	= mysqli_query($connection , "SELECT * FROM jadwal WHERE  widyaiswara = '".$wi."'");
+	$countdata 	= mysqli_query($connection , "SELECT * FROM jadwal WHERE  widyaiswara = '".$wi."' order by tanggal desc, waktu_mulai");
 	$getData 	= mysqli_fetch_array($countdata);
 	$cek 		= 1;
 	if ($getData[0] == null) {
@@ -28,7 +28,7 @@
 			// header('location: input_jadwal.php?msg=failed');
 		}		
 	} else {
-		$countdata 	= mysqli_query($connection , "SELECT * FROM jadwal WHERE  widyaiswara = '".$wi."'");
+		$countdata 	= mysqli_query($connection , "SELECT * FROM jadwal WHERE  widyaiswara = '".$wi."' order by tanggal desc, waktu_mulai");
 		while($dtCek = mysqli_fetch_array($countdata)) {
 		   if ($tanggal_db == $dtCek['tanggal']) {
 			$strjammulai 	= date("H:i", strtotime($dtCek['waktu_mulai'])); 

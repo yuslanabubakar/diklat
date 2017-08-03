@@ -143,55 +143,73 @@
                   <th width="15%">KEGIATAN</th>
 				  <th width="10%">JLH JP</th>
 				  <th width="25%">WIDYAISWARA</th>
+				  
                 </tr>
                 </thead>
                 <tbody>
                 <?php
+					
 					if ($pilihan == "bulan") {
-						$data = mysqli_query($connection , "SELECT * from jadwal where widyaiswara='".$widyaiswara."'");
-						// $cek = 0;
-						while ($dt = mysqli_fetch_array($data)) {
-							if (substr($dt['tanggal'],0,7) == $tahunbulan) {
-								echo "<tr>
-										<td>$dt[hari] / $dt[tanggal]</td>
-										<td>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
-										<td>$dt[nama_diklat]</td>
-										<td>$dt[kegiatan]</td>
-										<td>$dt[jumlah_jp]</td>
-										<td>$dt[widyaiswara]</td>
-									</tr>";
+						$total = 0;
+						$data = mysqli_query($connection , "SELECT * from jadwal where widyaiswara='".$widyaiswara."' order by tanggal desc, waktu_mulai");
+						if (mysqli_num_rows($data) == 0) { 
+						?>
+							<h1 style="color:red;">Data tidak ditemukan</h1>
+						<?php
+						}
+						else {
+							$totalData = 0;
+							while ($dt = mysqli_fetch_array($data)) {
+								if (substr($dt['tanggal'],0,7) == $tahunbulan) {
+									echo "<tr>
+											<td>$dt[hari] / $dt[tanggal]</td>
+											<td>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
+											<td>$dt[nama_diklat]</td>
+											<td>$dt[kegiatan]</td>
+											<td>$dt[jumlah_jp]</td>
+											<td>$dt[widyaiswara]</td>
+										</tr>";
+									$total = $total + $dt['jumlah_jp'];
+									$totalData = $totalData + 1;
+								}
 							}
-							else {
-								$cek = 1;
-								
+							if ($totalData == 0) {
+								?>
+									<h1 style="color:red;">Data tidak ditemukan</h1>
+								<?php
 							}
 						}
-						if ($cek == 1) {
-							echo "<h1> Data tidak ditemukan </h1>";
-							$cek = 0;
-						}
+						
 					}
 					else if ($pilihan == "tahun") {
-						$data = mysqli_query($connection , "SELECT * from jadwal where widyaiswara='".$widyaiswara."'");
-						// $cek = 0;
-						while ($dt = mysqli_fetch_array($data)) {
-							if (substr($dt['tanggal'],0,4) == "2018") {
-								echo "<tr>
-										<td>$dt[hari] / $dt[tanggal]</td>
-										<td>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
-										<td>$dt[nama_diklat]</td>
-										<td>$dt[kegiatan]</td>
-										<td>$dt[jumlah_jp]</td>
-										<td>$dt[widyaiswara]</td>
-									</tr>";
-							}
-							else {
-								$cek = 1;
-							}
+						$total = 0;
+						$data = mysqli_query($connection , "SELECT * from jadwal where widyaiswara='".$widyaiswara."' order by tanggal desc, waktu_mulai");
+						if (mysqli_num_rows($data) == 0) { 
+						?>
+							<h1 style="color:red;">Data tidak ditemukan</h1>
+						<?php
 						}
-						if ($cek == 1) {
-							echo "<h1> Data tidak ditemukan </h1>";
-							$cek = 0;
+						else {
+							$totalData = 0;
+							while ($dt = mysqli_fetch_array($data)) {
+								if (substr($dt['tanggal'],0,4) == $tahun) {
+									echo "<tr>
+											<td>$dt[hari] / $dt[tanggal]</td>
+											<td>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
+											<td>$dt[nama_diklat]</td>
+											<td>$dt[kegiatan]</td>
+											<td>$dt[jumlah_jp]</td>
+											<td>$dt[widyaiswara]</td>
+										</tr>";
+									$total = $total + $dt['jumlah_jp'];
+									$totalData = $totalData + 1;
+								}
+							}
+							if ($totalData == 0) {
+								?>
+									<h1 style="color:red;">Data tidak ditemukan</h1>
+								<?php
+							}
 						}
 					}
 				// while($data=mysqli_fetch_array($query)){
@@ -205,6 +223,8 @@
 						// </tr>";
 				// }
 				?>
+				<th colspan="4"> Total JP</th>
+				<th><?php echo $total ?> </th>
                 </tbody>
                 <tfoot>
                 </tfoot>

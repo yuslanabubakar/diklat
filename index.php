@@ -2,7 +2,7 @@
 <?php
 	$connection=mysqli_connect("127.0.0.1", "root", "", "diklatmedan");
 	mysqli_select_db($connection, "");
-	$query=mysqli_query($connection, "SELECT * FROM jadwal");
+	$query=mysqli_query($connection, "SELECT * FROM jadwal order by tanggal desc, waktu_mulai");
 	$data = mysqli_query($connection, "SELECT nama FROM pengajar");
 ?>
 <html>
