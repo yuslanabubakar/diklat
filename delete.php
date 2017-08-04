@@ -4,7 +4,7 @@
 		die("Connection Failed : " . mysqli_connect_error());
 	}
 	
-	$id_jadwal = $_GET['id_jadwal'];
+	$id_jadwal = $_POST['id_jadwal'];
 	$query = mysqli_query($connection , "DELETE FROM jadwal WHERE id_jadwal=".$id_jadwal);
-	header('location: index.php');
+	// header('location: index.php');
 ?>
