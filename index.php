@@ -153,15 +153,15 @@
 							<td align='center'><?php echo $data['kegiatan']; ?></td>
 							<td align='center'><?php echo $data['jumlah_jp']; ?></td>
 							<td align='center'><?php echo $data['widyaiswara']; ?></td>
-							<td align='center'>
-								<a href='<?php echo BASE_URL; ?>' class='btn btn-alert'>
-								<i class='glyphicon glyphicon-trash'></i>
-								</a>
-								
-								<a href='#' class='btn btn-alert'>
-								<i class='glyphicon glyphicon-edit'></i>
-								</a>
-							</td>
+              <input type="hidden" id="id_jadwal" value="<?php echo $data['id_jadwal']; ?>">
+              <td align='center'>
+                <a href='javascript:deleteConfirm()' class='btn btn-alert'>
+                <i class='glyphicon glyphicon-trash'></i>
+                </a>
+                <a href='edit.php?id_jadwal=<?php echo $data['id_jadwal']; ?>' class='btn btn-alert'>
+                <i class='glyphicon glyphicon-edit'></i>
+                </a>
+              </td>
 						</tr>
 				<?php
 				}
@@ -170,6 +170,7 @@
                 <tfoot>
                 </tfoot>
               </table>
+
             </div>
             <!-- /.box-body -->
           </div>
@@ -242,91 +243,20 @@
 
 <script type="text/javascript" src="daterangepicker.js"></script>
 
-<script>
-  $('input[name="daterange"]').daterangepicker(
-  {
-      locale: {
-        format: 'DD-MM-YYYY'
-      },
-      startDate: '01-01-2017',
-      endDate: '12-12-2020'
-  }, 
-  function(start, end, label) {
-      alert("A new date range was chosen: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
-	  day = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-	  document.getElementById("inputWaktu").value = day + " hari";
-  });
-</script>
+
 
 
 
 <script>
-function showJabatan(str) {
-    if (str == "") {
-        document.getElementById("inputJabatan").value = "";
-        return;
-    } else { 
-        if (window.XMLHttpRequest) {
-            // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("inputJabatan").value = this.responseText;
-            }
-        };
-        xmlhttp.open("GET","getJabatanKaryawan.php?q="+str,true);
-        xmlhttp.send();
-    }
-}
-
-function showNama1(str) {
-    if (str == "") {
-        document.getElementById("inputNama").value = "";
-		document.getElementById("inputJabatan").value = "";
-        return;
-    } else { 
-        if (window.XMLHttpRequest) {
-            // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("inputNama").value = this.responseText;
-				showJabatan(str);
-            }
-        };
-        xmlhttp.open("GET","getNamaKaryawan.php?q="+str,true);
-        xmlhttp.send();
-    }
-}
-
-function showNama2(str) {
-    if (str == "") {
-        document.getElementById("inputNama2").value = "";
-        return;
-    } else { 
-        if (window.XMLHttpRequest) {
-            // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("inputNama2").value = this.responseText;
-            }
-        };
-        xmlhttp.open("GET","getNamaKaryawan.php?q="+str,true);
-        xmlhttp.send();
-    }
+function deleteConfirm() {
+  var id_jadwal = document.getElementById('id_jadwal').value;
+  var r = confirm("Yakin ingin menghapus data ?");
+  if (r == true) {
+      $.post( "delete.php", { id_jadwal : id_jadwal })
+      .done(function( data ) {
+        location.reload();
+      });
+  } 
 }
 </script>
 
