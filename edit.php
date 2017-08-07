@@ -1,24 +1,13 @@
-<!DOCTYPE html>
 <?php
-	define('BASE_URL', 'http://localhost:81/diklat/');
+
+	$id_jadwal = $_REQUEST['id_jadwal'];
 	$connection=mysqli_connect("127.0.0.1", "root", "", "diklatmedan");
 	mysqli_select_db($connection, "");
-	$query=mysqli_query($connection, "SELECT * FROM jadwal order by tanggal desc, waktu_mulai");
-	$data = mysqli_query($connection, "SELECT nama FROM pengajar");
+	$query=mysqli_query($connection, "SELECT * FROM jadwal where id_jadwal=" . $id_jadwal);
+
 ?>
+
 <html>
-<style>
-	.searchoption {
-		margin-left:70%;
-	}
-</style>
-
-<datalist id="listWI">
-	<?php while ($row = mysqli_fetch_array($data)) { ?>
-	<option value = "<?php echo $row['nama']; ?>">
-	<?php } ?>
-</datalist>
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -97,88 +86,84 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        JADWAL / KEGIATAN
+        Form Input
       </h1>
-	  <h5 class="searchoption"><b>Pencarian : </b></h5>
-	  <form class="searchoption" action="result.php" method="Post">
-		  <div class="form-group">
-			  
-				<input type="text" placeholder="Masukkan Nama" list="listWI" name="widyaiswara">
-				
-			  
-		  </div>
-		  <div class="form-group">
-				<select name="pilihan">
-					<option value="bulan">Cari Berdasarkan Bulan</option>
-					<option value="tahun">Cari Berdasarkan Tahun</option>	
-				</select>
-		   </div>
-		   <div class="form-group">
-				<input type="submit" value="Cari">
-		   </div>
-	   </form>
-	   
-	   
     </section>
-  
+  <div class="col-md-9">
+    <div class="box box-info">
+      <form class="form-horizontal" id="edit" method="post" action="">
+        <div class="box-body">
+          <div class="form-group">
+            <label for="inputTanggal" class="col-sm-2 control-label"><span align="left">Tanggal</span></label>
+
+            <div class="col-sm-10">
+              <input type="date" class="form-control" id="inputTanggal" name="inputTanggal" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputMulai" class="col-sm-2 control-label">Waktu Mulai</label>
+
+            <div class="col-sm-10">
+              <input type="time" class="form-control" id="inputMulai" name="inputMulai" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputSelesai" class="col-sm-2 control-label">Waktu Selesai</label>
+
+            <div class="col-sm-10">
+              <input type="time" class="form-control" id="inputSelesai" name="inputSelesai" required>
+            </div>
+          </div>
+		  
+		  <div class="form-group">
+            <label for="nama_diklat" class="col-sm-2 control-label">Nama Diklat</label>
+
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="nama_diklat" name="nama_diklat" required>
+            </div>
+          </div>
+		  
+		  <div class="form-group">
+            <label for="kegiatan" class="col-sm-2 control-label">Kegiatan</label>
+
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="kegiatan" name="kegiatan" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputJP" class="col-sm-2 control-label"><span align="left">Jumlah JP</span></label>
+              <div class="col-sm-10">
+                <select class="form-control" id="listJP" name="listJP" required>
+                  <option></option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+              </div>  
+          </div>
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <button onclick="goBack()" class="btn btn-default">Kembali</button>
+            <button type="submit" class="btn btn-info pull-right" onclick="simpan()">Simpan</button>
+          </div>
+          <!-- /.box-footer -->
+      </form>
+    </div>
+  </div>
     <!-- Main content -->
     <section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th align='center' width="20%">HARI / TANGGAL</th>
-                  <th align='center' width="15%">WAKTU</th>
-				          <th align='center' width="15%">NAMA DIKLAT</th>
-                  <th align='center' width="15%">KEGIATAN</th>
-        				  <th align='center' width="10%">JLH JP</th>
-        				  <th align='center' width="25%">WIDYAISWARA</th>
-        				  <th align='center' width="15%">AKSI</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-					// $data=mysqli_fetch_array($query);
-					// print_r($data);
-				while($data=mysqli_fetch_array($query)){
-				?>
-							<tr>
-							<td align='center'><?php echo $data['hari'] . '/' . $data['tanggal']; ?></td>
-							<td align='center'><?php echo $data['waktu_mulai'] . '-' . $data['waktu_selesai']; ?></td>
-							<td align='center'><?php echo $data['nama_diklat']; ?></td>
-							<td align='center'><?php echo $data['kegiatan']; ?></td>
-							<td align='center'><?php echo $data['jumlah_jp']; ?></td>
-							<td align='center'><?php echo $data['widyaiswara']; ?></td>
-              <input type="hidden" id="id_jadwal" value="<?php echo $data['id_jadwal']; ?>">
-              <td align='center'>
-                <a href='javascript:deleteConfirm()' class='btn btn-alert'>
-                <i class='glyphicon glyphicon-trash'></i>
-                </a>
-                <a href='edit.php?id_jadwal=<?php echo $data['id_jadwal']; ?>' class='btn btn-alert'>
-                <i class='glyphicon glyphicon-edit'></i>
-                </a>
-              </td>
-						</tr>
-				<?php
-				}
-				?>
-                </tbody>
-                <tfoot>
-                </tfoot>
-              </table>
-
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-      </div>
+      <!-- Small boxes (Stat box) -->
+      
       <!-- /.row -->
+      <!-- Main row -->
+      <div class="row">
+      </div>
+      <!-- /.row (main row) -->
+
     </section>
     <!-- /.content -->
   </div>
@@ -243,21 +228,15 @@
 
 <script type="text/javascript" src="daterangepicker.js"></script>
 
-
-
-
-
 <script>
-function deleteConfirm() {
-  var id_jadwal = document.getElementById('id_jadwal').value;
-  var r = confirm("Yakin ingin menghapus data ?");
-  if (r == true) {
-      $.post( "delete.php", { id_jadwal : id_jadwal })
-      .done(function( data ) {
-        location.reload();
-      });
-  } 
-}
+	function goBack() {
+	    window.history.back();
+	}
+
+  function simpan() {
+    $('#edit').attr("action","editData.php?id_jadwal=<?php echo $id_jadwal; ?>");
+    $('#edit').submit;
+  }
 </script>
 
 </body>
