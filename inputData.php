@@ -18,14 +18,17 @@
 	$countdata 	= mysqli_query($connection , "SELECT * FROM jadwal WHERE  widyaiswara = '".$wi."' order by tanggal desc, waktu_mulai");
 	$getData 	= mysqli_fetch_array($countdata);
 	$cek 		= 1;
+	$tanggalAda = "";
+	$diklatAda = "";
+	$kegiatanAda = "";
 	if ($getData[0] == null) {
 		$query = mysqli_query($connection , "INSERT into jadwal (hari,tanggal,waktu_mulai,waktu_selesai,nama_diklat,kegiatan,jumlah_jp,widyaiswara) values ('$hari','$tanggal_db','$waktuMulai','$waktuSelesai','$nama_diklat','$kegiatan','$jp','$wi')");
 		if ($query) {
-			header('location: index.php?msg=success');
+			header('location: index.php');
 		}
 		else {
 			echo mysqli_error($connection);
-			// header('location: input_jadwal.php?msg=failed');
+			header('location: input_jadwal.php');
 		}		
 	} else {
 		$countdata 	= mysqli_query($connection , "SELECT * FROM jadwal WHERE  widyaiswara = '".$wi."' order by tanggal desc, waktu_mulai");
@@ -40,6 +43,9 @@
 			
 			) {
 			  $cek = 0;
+			  $tanggalAda = $dtCek['tanggal'];
+			  $diklatAda = $dtCek['nama_diklat'];
+			  $kegiatanAda = $dtCek['kegiatan'];
 			}
 		   }
 		}
@@ -47,15 +53,15 @@
 		if ($cek == 1) {
 			$query = mysqli_query($connection , "INSERT into jadwal (hari,tanggal,waktu_mulai,waktu_selesai,nama_diklat,kegiatan,jumlah_jp,widyaiswara) values ('$hari','$tanggal_db','$waktuMulai','$waktuSelesai','$nama_diklat','$kegiatan','$jp','$wi')");
 			if ($query) {
-				header('location: index.php?msg=success');
+				echo "<script>alert('Input Data Jadwal Berhasil'); window.location = 'index.php';</script>";
 			}
 			else {
 				echo mysqli_error($connection);
-				// header('location: input_jadwal.php?msg=failed');
+				header('location: input_jadwal.php');
 			}
 		}
 		else {
-			// JAVASCRIPT
+			echo "<script>alert('Terjadi kegagalan. Widyaiswara " . $wi . " sudah ada jadwal di diklat " . $diklatAda . " dalam kegiatan " . $kegiatanAda . " pada tanggal " . $tanggalAda . "'); window.location = 'input_jadwal.php';</script>";
 		}
 	}
 	

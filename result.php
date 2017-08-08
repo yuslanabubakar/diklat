@@ -137,13 +137,13 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th width="20%">HARI / TANGGAL</th>
-                  <th width="15%">WAKTU</th>
-				  <th width="15%">NAMA DIKLAT</th>
-                  <th width="15%">KEGIATAN</th>
-				  <th width="10%">JLH JP</th>
-				  <th width="25%">WIDYAISWARA</th>
-				  <th width="15%">AKSI</th>
+                  <th width="20%" align="center">HARI / TANGGAL</th>
+                  <th width="15%" align="center">WAKTU</th>
+				          <th width="15%" align="center">NAMA DIKLAT</th>
+                  <th width="15%" align="center">KEGIATAN</th>
+        				  <th width="10%" align="center">JLH JP</th>
+        				  <th width="25%" align="center">WIDYAISWARA</th>
+        				  <th width="15%" align="center">AKSI</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -168,13 +168,12 @@
 											<td>$dt[kegiatan]</td>
 											<td>$dt[jumlah_jp]</td>
 											<td>$dt[widyaiswara]</td>
-											<td>
-												<a href='#' class='btn btn-alert'>
+											<td>";
+                      echo "<a href='javascript:deleteConfirm(".$dt['id_jadwal'].")' class='btn btn-alert'>
 												<i class='glyphicon glyphicon-trash'></i>
-												</a>
-												
-												<a href='#' class='btn btn-alert'>
-												<i class='glyphicon glyphicon-edit'></i>
+												</a>";
+                      echo "<a href='edit.php?id_jadwal=".$dt['id_jadwal']."' class='btn btn-alert'>";
+												echo "<i class='glyphicon glyphicon-edit'></i>
 												</a>
 											</td>
 										</tr>";
@@ -209,15 +208,14 @@
 											<td>$dt[kegiatan]</td>
 											<td>$dt[jumlah_jp]</td>
 											<td>$dt[widyaiswara]</td>
-											<td>
-												<a href='#' class='btn btn-alert'>
-												<i class='glyphicon glyphicon-trash'></i>
-												</a>
-												
-												<a href='#' class='btn btn-alert'>
-												<i class='glyphicon glyphicon-edit'></i>
-												</a>
-											</td>
+											<td>";
+                      echo "<a href='javascript:deleteConfirm(".$dt['id_jadwal'].")' class='btn btn-alert'>
+                        <i class='glyphicon glyphicon-trash'></i>
+                        </a>";
+                      echo "<a href='edit.php?id_jadwal=".$dt['id_jadwal']."' class='btn btn-alert'>";
+                        echo "<i class='glyphicon glyphicon-edit'></i>
+                        </a>
+                      </td>
 										</tr>";
 									$total = $total + $dt['jumlah_jp'];
 									$totalData = $totalData + 1;
@@ -325,75 +323,15 @@
   });
 </script>
 
-
-
 <script>
-function showJabatan(str) {
-    if (str == "") {
-        document.getElementById("inputJabatan").value = "";
-        return;
-    } else { 
-        if (window.XMLHttpRequest) {
-            // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("inputJabatan").value = this.responseText;
-            }
-        };
-        xmlhttp.open("GET","getJabatanKaryawan.php?q="+str,true);
-        xmlhttp.send();
-    }
-}
-
-function showNama1(str) {
-    if (str == "") {
-        document.getElementById("inputNama").value = "";
-		document.getElementById("inputJabatan").value = "";
-        return;
-    } else { 
-        if (window.XMLHttpRequest) {
-            // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("inputNama").value = this.responseText;
-				showJabatan(str);
-            }
-        };
-        xmlhttp.open("GET","getNamaKaryawan.php?q="+str,true);
-        xmlhttp.send();
-    }
-}
-
-function showNama2(str) {
-    if (str == "") {
-        document.getElementById("inputNama2").value = "";
-        return;
-    } else { 
-        if (window.XMLHttpRequest) {
-            // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("inputNama2").value = this.responseText;
-            }
-        };
-        xmlhttp.open("GET","getNamaKaryawan.php?q="+str,true);
-        xmlhttp.send();
-    }
+function deleteConfirm(tes) {
+  var r = confirm("Yakin ingin menghapus data ?");
+  if (r == true) {
+      $.post( "delete.php", { id_jadwal : tes })
+      .done(function( data ) {
+        location.reload();
+      });
+  } 
 }
 </script>
 

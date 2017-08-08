@@ -52,14 +52,14 @@
 			$query = mysqli_query($connection , "UPDATE jadwal set hari='" . $hari . "', tanggal='" . $tanggal . "', waktu_mulai='" . $waktuMulai . "', waktu_selesai='" . $waktuSelesai .
 				"', nama_diklat='" . $namaDiklat . "', kegiatan='" . $kegiatan . "', jumlah_jp=" . $jumlahJP . " where id_jadwal=" . $id_jadwal);
 			if ($query) {
-				header('location: index.php?msg=success');
+				header('location: index.php');
 			}
 			else {
 				echo mysqli_error($connection);
-				// header('location: input_jadwal.php?msg=failed');
+				header('location: input_jadwal.php');
 			}
 		}
 		else {
-			echo "<script>alert('Terjadi kegagalan. Widyaiswara " . $wi . " sudah ada di diklat " . $diklatAda . "'); window.location = 'edit.php?id_jadwal=" . $id_jadwal . "';</script>";
+			echo "<script>alert('Terjadi kegagalan. Widyaiswara " . $wi . " sudah ada di diklat " . $diklatAda . " dalam kegiatan " . $kegiatanAda . " pada tanggal " . $tanggalAda . "'); window.location = 'edit.php?id_jadwal=" . $id_jadwal . "';</script>";
 		}
 ?>

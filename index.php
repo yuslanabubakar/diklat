@@ -153,9 +153,9 @@
 							<td align='center'><?php echo $data['kegiatan']; ?></td>
 							<td align='center'><?php echo $data['jumlah_jp']; ?></td>
 							<td align='center'><?php echo $data['widyaiswara']; ?></td>
-              <input type="hidden" id="id_jadwal" value="<?php echo $data['id_jadwal']; ?>">
+                <input type="hidden" id="id_jadwal" class="idjadwal" value="<?php echo $data['id_jadwal']; ?>">
               <td align='center'>
-                <a href='javascript:deleteConfirm()' class='btn btn-alert'>
+                <a href='javascript:deleteConfirm(<?php echo $data['id_jadwal']; ?>)' class='btn btn-alert'>
                 <i class='glyphicon glyphicon-trash'></i>
                 </a>
                 <a href='edit.php?id_jadwal=<?php echo $data['id_jadwal']; ?>' class='btn btn-alert'>
@@ -248,11 +248,13 @@
 
 
 <script>
-function deleteConfirm() {
-  var id_jadwal = document.getElementById('id_jadwal').value;
+function deleteConfirm(tes) {
+  // var id_jadwal = document.getElementById('id_jadwal').value;
+  // var id_jadwal = $(".idjadwal").val();
+  // alert(tes);
   var r = confirm("Yakin ingin menghapus data ?");
   if (r == true) {
-      $.post( "delete.php", { id_jadwal : id_jadwal })
+      $.post( "delete.php", { id_jadwal : tes })
       .done(function( data ) {
         location.reload();
       });
