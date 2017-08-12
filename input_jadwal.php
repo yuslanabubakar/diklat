@@ -39,6 +39,12 @@
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
   <link rel="stylesheet" type="text/css" href="daterangepicker.css" />
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <link rel="stylesheet" href="/resources/demos/style.css">
+
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -96,7 +102,7 @@
             <label for="inputTanggal" class="col-sm-2 control-label"><span align="left">Tanggal</span></label>
 
             <div class="col-sm-10">
-              <input type="date" class="form-control" id="inputTanggal" name="inputTanggal" required>
+              <input type="date" class="form-control" id="datepicker" name="inputTanggal" required>
             </div>
           </div>
 
@@ -104,7 +110,7 @@
             <label for="inputMulai" class="col-sm-2 control-label">Waktu Mulai</label>
 
             <div class="col-sm-10">
-              <input type="time" class="form-control" id="inputMulai" name="inputMulai" required>
+              <input type="time" class="form-control" id="timepicker1" name="inputMulai" required>
             </div>
           </div>
 
@@ -112,7 +118,7 @@
             <label for="inputSelesai" class="col-sm-2 control-label">Waktu Selesai</label>
 
             <div class="col-sm-10">
-              <input type="time" class="form-control" id="inputSelesai" name="inputSelesai" required>
+              <input type="time" class="form-control" id="timepicker2" name="inputSelesai" required>
             </div>
           </div>
 		  
@@ -242,6 +248,26 @@
 <script type="text/javascript" src="moment.min.js"></script>
 
 <script type="text/javascript" src="daterangepicker.js"></script>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+<script>
+  $( function() {
+    $( "#datepicker" ).datepicker({
+      dateFormat:'yy-mm-dd'
+    });
+  });
+
+  $("#timepicker1").timepicker({
+    'timeFormat': 'HH:mm'
+  });
+
+  $("#timepicker2").timepicker({
+    'timeFormat': 'HH:mm'
+  });
+</script>
 
 </body>
 </html>
