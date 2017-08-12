@@ -93,6 +93,7 @@
       <ul class="sidebar-menu">
         <li><a href="index.php"><i class="fa fa-fw fa-desktop"></i> <span>Halaman Utama</span></a></li>
         <li><a href="input_jadwal.php"><i class="fa fa-book"></i> <span>Input Jadwal</span></a></li>
+        <li><a href="dataWidyaiswara.php"><i class="fa fa-user" aria-hidden="true"></i> <span>Data Widyaiswara</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -137,13 +138,13 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th width="20%" align="center">HARI / TANGGAL</th>
-                  <th width="15%" align="center">WAKTU</th>
-				          <th width="15%" align="center">NAMA DIKLAT</th>
-                  <th width="15%" align="center">KEGIATAN</th>
-        				  <th width="10%" align="center">JLH JP</th>
-        				  <th width="25%" align="center">WIDYAISWARA</th>
-        				  <th width="15%" align="center">AKSI</th>
+                  <th width="20%" style="text-align:center">HARI / TANGGAL</th>
+                  <th width="15%" style="text-align:center">WAKTU</th>
+				          <th width="15%" style="text-align:center">NAMA DIKLAT</th>
+                  <th width="15%" style="text-align:center">KEGIATAN</th>
+        				  <th width="10%" style="text-align:center">JLH JP</th>
+        				  <th width="25%" style="text-align:center">WIDYAISWARA</th>
+        				  <th width="15%" style="text-align:center">AKSI</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -169,7 +170,7 @@
 											<td>$dt[jumlah_jp]</td>
 											<td>$dt[widyaiswara]</td>
 											<td>";
-                      echo "<a href='javascript:deleteConfirm(".$dt['id_jadwal'].")' class='btn btn-alert'>
+                      echo "<a href='javascript:deleteConfirm(".$dt['id_jadwal'].")' class='btn btn-danger'>
 												<i class='glyphicon glyphicon-trash'></i>
 												</a>";
                       echo "<a href='edit.php?id_jadwal=".$dt['id_jadwal']."' class='btn btn-alert'>";
@@ -209,7 +210,7 @@
 											<td>$dt[jumlah_jp]</td>
 											<td>$dt[widyaiswara]</td>
 											<td>";
-                      echo "<a href='javascript:deleteConfirm(".$dt['id_jadwal'].")' class='btn btn-alert'>
+                      echo "<a href='javascript:deleteConfirm(".$dt['id_jadwal'].")' class='btn btn-danger'>
                         <i class='glyphicon glyphicon-trash'></i>
                         </a>";
                       echo "<a href='edit.php?id_jadwal=".$dt['id_jadwal']."' class='btn btn-alert'>";
@@ -251,7 +252,7 @@
     <div class="pull-right hidden-xs">
       
     </div>
-    <strong>Copyright &copy; 2017-2018 Yuslan Ilham .</strong> All rights
+    <strong>Copyright &copy; 2017-2018 Badan Pendidikan dan Pelatihan Kota Medan .</strong> All rights
     reserved.
   </footer>
 

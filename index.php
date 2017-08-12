@@ -87,6 +87,7 @@
       <ul class="sidebar-menu">
         <li><a href="index.php"><i class="fa fa-fw fa-desktop"></i> <span>Halaman Utama</span></a></li>
         <li><a href="input_jadwal.php"><i class="fa fa-book"></i> <span>Input Jadwal</span></a></li>
+        <li><a href="dataWidyaiswara.php"><i class="fa fa-user" aria-hidden="true"></i> <span>Data Widyaiswara</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -131,13 +132,13 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th align='center' width="20%">HARI / TANGGAL</th>
-                  <th align='center' width="15%">WAKTU</th>
-				          <th align='center' width="15%">NAMA DIKLAT</th>
-                  <th align='center' width="15%">KEGIATAN</th>
-        				  <th align='center' width="10%">JLH JP</th>
-        				  <th align='center' width="25%">WIDYAISWARA</th>
-        				  <th align='center' width="15%">AKSI</th>
+                  <th style="text-align:center" width="20%">HARI / TANGGAL</th>
+                  <th style="text-align:center" width="15%">WAKTU</th>
+				          <th style="text-align:center" width="15%">NAMA DIKLAT</th>
+                  <th style="text-align:center" width="15%">KEGIATAN</th>
+        				  <th style="text-align:center" width="10%">JLH JP</th>
+        				  <th style="text-align:center" width="25%">WIDYAISWARA</th>
+        				  <th style="text-align:center" width="15%">AKSI</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -155,7 +156,7 @@
 							<td align='center'><?php echo $data['widyaiswara']; ?></td>
                 <input type="hidden" id="id_jadwal" class="idjadwal" value="<?php echo $data['id_jadwal']; ?>">
               <td align='center'>
-                <a href='javascript:deleteConfirm(<?php echo $data['id_jadwal']; ?>)' class='btn btn-alert'>
+                <a href='javascript:deleteConfirm(<?php echo $data['id_jadwal']; ?>)' class='btn btn-danger'>
                 <i class='glyphicon glyphicon-trash'></i>
                 </a>
                 <a href='edit.php?id_jadwal=<?php echo $data['id_jadwal']; ?>' class='btn btn-alert'>
@@ -187,7 +188,7 @@
     <div class="pull-right hidden-xs">
       
     </div>
-    <strong>Copyright &copy; 2017-2018 Yuslan Ilham .</strong> All rights
+    <strong>Copyright &copy; 2017-2018 Badan Pendidikan dan Pelatihan Kota Medan .</strong> All rights
     reserved.
   </footer>
 

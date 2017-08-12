@@ -2,8 +2,12 @@
 <?php
 	$connection=mysqli_connect("127.0.0.1", "root", "", "diklatmedan");
 	mysqli_select_db($connection, "");
-	$query=mysqli_query($connection, "SELECT * FROM jadwal order by tanggal desc, waktu_mulai");
-	$data = mysqli_query($connection, "SELECT * FROM pengajar");
+	$nip = $_REQUEST['nip'];
+	$nama = "";
+	$data = mysqli_query($connection, "SELECT * FROM pengajar where nip=".$nip);
+	while ($dt = mysqli_fetch_array($data)) {
+		$nama = $dt['nama'];
+	}
 ?>
 <html>
 <head>
@@ -85,85 +89,36 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Form Input Jadwal
+        Form Edit Widyaiswara
       </h1>
+      <br>
     </section>
   <div class="col-md-9">
     <div class="box box-info">
-      <form class="form-horizontal" method="post" action="inputData.php">
+      <form class="form-horizontal" id="edit" method="post" action="">
         <div class="box-body">
-          <div class="form-group">
-            <label for="inputTanggal" class="col-sm-2 control-label"><span align="left">Tanggal</span></label>
+		  
+		  <div class="form-group">
+            <label for="nip_wi" class="col-sm-2 control-label">NIP Widyaiswara</label>
 
             <div class="col-sm-10">
-              <input type="date" class="form-control" id="inputTanggal" name="inputTanggal" required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="inputMulai" class="col-sm-2 control-label">Waktu Mulai</label>
-
-            <div class="col-sm-10">
-              <input type="time" class="form-control" id="inputMulai" name="inputMulai" required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="inputSelesai" class="col-sm-2 control-label">Waktu Selesai</label>
-
-            <div class="col-sm-10">
-              <input type="time" class="form-control" id="inputSelesai" name="inputSelesai" required>
+              <input type="text" class="form-control" id="nip_wi" name="nip_wi" value="<?php echo $nip; ?>" disabled>
             </div>
           </div>
 		  
 		  <div class="form-group">
-            <label for="nama_diklat" class="col-sm-2 control-label">Nama Diklat</label>
+            <label for="nama_wi" class="col-sm-2 control-label">Nama Widyaiswara</label>
 
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="nama_diklat" name="nama_diklat" required>
+              <input type="text" class="form-control" id="nama_wi" name="nama_wi" placeholder="<?php echo $nama; ?>"  required>
             </div>
           </div>
-		  
-		  <div class="form-group">
-            <label for="kegiatan" class="col-sm-2 control-label">Kegiatan</label>
-
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="kegiatan" name="kegiatan" required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="inputJP" class="col-sm-2 control-label"><span align="left">Jumlah JP</span></label>
-              <div class="col-sm-10">
-                <select class="form-control" id="listJP" name="listJP" required>
-                  <option></option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-              </div>  
-          </div>
-		
-			<div class="form-group">
-              <label for="inputWI" class="col-sm-2 control-label">WidyaIswara</label>
-			
-              <div class="col-sm-10">
-                <select class="form-control" id="inputWI" name="inputWI" required>
-                  <option></option>
-                  <?php while ($dt = mysqli_fetch_array($data)) { ?>
-                  <option>
-                      <?php echo $dt['nama']; ?>
-                  </option>
-                  <?php } ?>
-                </select>
-              </div>
-            </div>
           
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
-            <button type="reset" class="btn btn-default">Reset</button>
-            <button type="submit" class="btn btn-info pull-right">Simpan</button>
+            <button onclick="goBack()" class="btn btn-default">Kembali</button>
+            <button type="submit" class="btn btn-info pull-right" onclick="simpan()">Simpan</button>
           </div>
           <!-- /.box-footer -->
       </form>
@@ -242,6 +197,17 @@
 <script type="text/javascript" src="moment.min.js"></script>
 
 <script type="text/javascript" src="daterangepicker.js"></script>
+
+<script>
+	function goBack() {
+	    window.history.back();
+	}
+
+	function simpan() {
+	    $('#edit').attr("action","editDataWidyaiswara.php?nip=<?php echo $nip; ?>");
+		$('#edit').submit;
+	}
+</script>
 
 </body>
 </html>

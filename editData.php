@@ -52,7 +52,7 @@
 			$query = mysqli_query($connection , "UPDATE jadwal set hari='" . $hari . "', tanggal='" . $tanggal . "', waktu_mulai='" . $waktuMulai . "', waktu_selesai='" . $waktuSelesai .
 				"', nama_diklat='" . $namaDiklat . "', kegiatan='" . $kegiatan . "', jumlah_jp=" . $jumlahJP . " where id_jadwal=" . $id_jadwal);
 			if ($query) {
-				header('location: index.php');
+				echo "<script>alert('Data Jadwal Berhasil Diganti'); window.location = 'index.php';</script>";
 			}
 			else {
 				echo mysqli_error($connection);

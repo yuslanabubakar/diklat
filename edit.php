@@ -5,6 +5,22 @@
 	mysqli_select_db($connection, "");
 	$query=mysqli_query($connection, "SELECT * FROM jadwal where id_jadwal=" . $id_jadwal);
 
+  $tanggal = "";
+  $waktuMulai = "";
+  $waktuSelesai = "";
+  $namaDiklat = "";
+  $namaKegiatan = "";
+  $jumlahJP = 0;
+
+  while ($data = mysqli_fetch_array($query)) {
+    $tanggal = $data['tanggal'];
+    $waktuMulai = $data['waktu_mulai'];
+    $waktuSelesai = $data['waktu_selesai'];
+    $namaDiklat = $data['nama_diklat'];
+    $namaKegiatan = $data['kegiatan'];
+    $jumlahJP = $data['jumlah_jp'];
+  }
+
 ?>
 
 <html>
@@ -76,6 +92,7 @@
       <ul class="sidebar-menu">
         <li><a href="index.php"><i class="fa fa-fw fa-desktop"></i> <span>Halaman Utama</span></a></li>
         <li><a href="input_jadwal.php"><i class="fa fa-book"></i> <span>Input Jadwal</span></a></li>
+        <li><a href="dataWidyaiswara.php"><i class="fa fa-user" aria-hidden="true"></i> <span>Data Widyaiswara</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -97,7 +114,7 @@
             <label for="inputTanggal" class="col-sm-2 control-label"><span align="left">Tanggal</span></label>
 
             <div class="col-sm-10">
-              <input type="date" class="form-control" id="inputTanggal" name="inputTanggal" required>
+              <input type="date" class="form-control" id="inputTanggal" name="inputTanggal" value="<?php echo $tanggal; ?>" required>
             </div>
           </div>
 
@@ -105,7 +122,7 @@
             <label for="inputMulai" class="col-sm-2 control-label">Waktu Mulai</label>
 
             <div class="col-sm-10">
-              <input type="time" class="form-control" id="inputMulai" name="inputMulai" required>
+              <input type="time" class="form-control" id="inputMulai" name="inputMulai" value="<?php echo $waktuMulai; ?>" required>
             </div>
           </div>
 
@@ -113,7 +130,7 @@
             <label for="inputSelesai" class="col-sm-2 control-label">Waktu Selesai</label>
 
             <div class="col-sm-10">
-              <input type="time" class="form-control" id="inputSelesai" name="inputSelesai" required>
+              <input type="time" class="form-control" id="inputSelesai" name="inputSelesai" value="<?php echo $waktuSelesai; ?>" required>
             </div>
           </div>
 		  
@@ -121,7 +138,7 @@
             <label for="nama_diklat" class="col-sm-2 control-label">Nama Diklat</label>
 
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="nama_diklat" name="nama_diklat" required>
+              <input type="text" class="form-control" id="nama_diklat" name="nama_diklat" value="<?php echo $namaDiklat; ?>" required>
             </div>
           </div>
 		  
@@ -129,7 +146,7 @@
             <label for="kegiatan" class="col-sm-2 control-label">Kegiatan</label>
 
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="kegiatan" name="kegiatan" required>
+              <input type="text" class="form-control" id="kegiatan" name="kegiatan" value="<?php echo $namaKegiatan; ?>" required>
             </div>
           </div>
 
@@ -137,7 +154,7 @@
             <label for="inputJP" class="col-sm-2 control-label"><span align="left">Jumlah JP</span></label>
               <div class="col-sm-10">
                 <select class="form-control" id="listJP" name="listJP" required>
-                  <option></option>
+                  <option><?php echo $jumlahJP; ?></option>
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -172,7 +189,7 @@
     <div class="pull-right hidden-xs">
       
     </div>
-    <strong>Copyright &copy; 2017-2018 Yuslan Ilham .</strong> All rights
+    <strong>Copyright &copy; 2017-2018 Badan Pendidikan dan Pelatihan Kota Medan .</strong> All rights
     reserved.
   </footer>
 

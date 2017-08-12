@@ -1,11 +1,22 @@
-<!DOCTYPE html>
 <?php
+
 	$connection=mysqli_connect("127.0.0.1", "root", "", "diklatmedan");
 	mysqli_select_db($connection, "");
-	$query=mysqli_query($connection, "SELECT * FROM jadwal order by tanggal desc, waktu_mulai");
-	$data = mysqli_query($connection, "SELECT * FROM pengajar");
+	$query = mysqli_query($connection, "SELECT * FROM pengajar");
 ?>
 <html>
+<style>
+	.addWI {
+		margin-left:80%;
+	}
+</style>
+
+<datalist id="listWI">
+	<?php while ($row = mysqli_fetch_array($data)) { ?>
+	<option value = "<?php echo $row['nama']; ?>">
+	<?php } ?>
+</datalist>
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -85,100 +96,81 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Form Input Jadwal
+        DATA WIDYAISWARA
       </h1>
+      <a class="btn btn-primary addWI" href="tambahWidyaiswara.php">
+  		<i class="fa fa-user fa-fw"></i> Tambah Widyaiswara</a>
+	  <!-- <h5 class="searchoption"><b>Pencarian : </b></h5>
+	  <form class="searchoption" action="result.php" method="Post">
+		  <div class="form-group">
+			  
+				<input type="text" placeholder="Masukkan Nama" list="listWI" name="widyaiswara">
+				
+			  
+		  </div>
+		  <div class="form-group">
+				<select name="pilihan">
+					<option value="bulan">Cari Berdasarkan Bulan</option>
+					<option value="tahun">Cari Berdasarkan Tahun</option>	
+				</select>
+		   </div>
+		   <div class="form-group">
+				<input type="submit" value="Cari">
+		   </div>
+	   </form> -->
+	   
+	   
     </section>
-  <div class="col-md-9">
-    <div class="box box-info">
-      <form class="form-horizontal" method="post" action="inputData.php">
-        <div class="box-body">
-          <div class="form-group">
-            <label for="inputTanggal" class="col-sm-2 control-label"><span align="left">Tanggal</span></label>
-
-            <div class="col-sm-10">
-              <input type="date" class="form-control" id="inputTanggal" name="inputTanggal" required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="inputMulai" class="col-sm-2 control-label">Waktu Mulai</label>
-
-            <div class="col-sm-10">
-              <input type="time" class="form-control" id="inputMulai" name="inputMulai" required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="inputSelesai" class="col-sm-2 control-label">Waktu Selesai</label>
-
-            <div class="col-sm-10">
-              <input type="time" class="form-control" id="inputSelesai" name="inputSelesai" required>
-            </div>
-          </div>
-		  
-		  <div class="form-group">
-            <label for="nama_diklat" class="col-sm-2 control-label">Nama Diklat</label>
-
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="nama_diklat" name="nama_diklat" required>
-            </div>
-          </div>
-		  
-		  <div class="form-group">
-            <label for="kegiatan" class="col-sm-2 control-label">Kegiatan</label>
-
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="kegiatan" name="kegiatan" required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="inputJP" class="col-sm-2 control-label"><span align="left">Jumlah JP</span></label>
-              <div class="col-sm-10">
-                <select class="form-control" id="listJP" name="listJP" required>
-                  <option></option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-              </div>  
-          </div>
-		
-			<div class="form-group">
-              <label for="inputWI" class="col-sm-2 control-label">WidyaIswara</label>
-			
-              <div class="col-sm-10">
-                <select class="form-control" id="inputWI" name="inputWI" required>
-                  <option></option>
-                  <?php while ($dt = mysqli_fetch_array($data)) { ?>
-                  <option>
-                      <?php echo $dt['nama']; ?>
-                  </option>
-                  <?php } ?>
-                </select>
-              </div>
-            </div>
-          
-          </div>
-          <!-- /.box-body -->
-          <div class="box-footer">
-            <button type="reset" class="btn btn-default">Reset</button>
-            <button type="submit" class="btn btn-info pull-right">Simpan</button>
-          </div>
-          <!-- /.box-footer -->
-      </form>
-    </div>
-  </div>
+  
     <!-- Main content -->
     <section class="content">
-      <!-- Small boxes (Stat box) -->
-      
-      <!-- /.row -->
-      <!-- Main row -->
       <div class="row">
-      </div>
-      <!-- /.row (main row) -->
+        <div class="col-xs-12">
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr align='center'>
+                  	<th style="text-align:center" width="25%">NIP WIDYAISWARA</th>
+                  	<th style="text-align:center" width="45%">NAMA WIDYAISWARA</th>
+        			<th style="text-align:center" width="30%">AKSI</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+					// $data=mysqli_fetch_array($query);
+					// print_r($data);
+				while($data=mysqli_fetch_array($query)){
+				?>
+							<tr>
+							<td align='center'><?php echo $data['nip']; ?></td>
+							<td align='center'><?php echo $data['nama']; ?></td>
+              <td align='center'>
+                <a href='javascript:deleteConfirm(<?php echo $data['nip']; ?>)' class="btn btn-danger">
+                <i class="fa fa-trash-o fa-lg"></i>DELETE
+                </a>
+                <a href='editWidyaiswara.php?nip=<?php echo $data['nip']; ?>' class='btn btn-alert'>
+                <i class='glyphicon glyphicon-edit'></i>EDIT
+                </a>
+              </td>
+						</tr>
+				<?php
+				}
+				?>
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
 
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
     </section>
     <!-- /.content -->
   </div>
@@ -243,5 +235,27 @@
 
 <script type="text/javascript" src="daterangepicker.js"></script>
 
+
+
+
+
+<script>
+function deleteConfirm(tes) {
+  // var id_jadwal = document.getElementById('id_jadwal').value;
+  // var id_jadwal = $(".idjadwal").val();
+  // alert(tes);
+  var r = confirm("Yakin ingin menghapus data widyaiswara ?");
+  if (r == true) {
+      $.post( "deleteWidyaiswara.php", { nip : tes })
+      .done(function( data ) {
+        location.reload();
+      });
+  } 
+}
+</script>
+
 </body>
 </html>
+
+
+?>
