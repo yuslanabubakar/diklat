@@ -81,6 +81,7 @@
         <li><a href="index.php"><i class="fa fa-fw fa-desktop"></i> <span>Halaman Utama</span></a></li>
         <li><a href="input_jadwal.php"><i class="fa fa-book"></i> <span>Input Jadwal</span></a></li>
         <li><a href="dataWidyaiswara.php"><i class="fa fa-user" aria-hidden="true"></i> <span>Data Widyaiswara</span></a></li>
+        <li><a href="laporan.php"><i class="fa fa-file" aria-hidden="true"></i> <span>Cetak Laporan</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -123,7 +124,7 @@
           </div>
 		  
 		  <div class="form-group">
-            <label for="nama_diklat" class="col-sm-2 control-label">Nama Diklat</label>
+            <label for="nama_diklat" class="col-sm-2 control-label">Mata Pelajaran</label>
 
             <div class="col-sm-10">
               <input type="text" class="form-control" id="nama_diklat" name="nama_diklat" required>
