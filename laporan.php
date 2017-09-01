@@ -2,7 +2,7 @@
 <?php
 	$connection=mysqli_connect("127.0.0.1", "root", "", "diklatmedan");
 	mysqli_select_db($connection, "");
-	$query=mysqli_query($connection, "SELECT * FROM jadwal");
+	$query=mysqli_query($connection, "SELECT * FROM jadwal group by nama_diklat");
 ?>
 <html>
 <head>
@@ -77,7 +77,7 @@
       <!-- Sidebar user panel -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
-        <li><a href="index.php"><i class="fa fa-fw fa-desktop"></i> <span>Halaman Utama</span></a></li>
+        <li><a href="home.php"><i class="fa fa-fw fa-desktop"></i> <span>Halaman Utama</span></a></li>
         <li><a href="input_jadwal.php"><i class="fa fa-book"></i> <span>Input Jadwal</span></a></li>
         <li><a href="dataWidyaiswara.php"><i class="fa fa-user" aria-hidden="true"></i> <span>Data Widyaiswara</span></a></li>
         <li><a href="laporan.php"><i class="fa fa-file" aria-hidden="true"></i> <span>Cetak Laporan</span></a></li>
@@ -108,7 +108,7 @@
 	              <option></option>
 	              <?php while ($dt = mysqli_fetch_array($query)) { ?>
 	                  <option>
-	                  	<?php echo $dt['kegiatan']; ?>
+	                  	<?php echo $dt['nama_diklat']; ?>
 	                  </option>
 	              <?php } ?>
               </select>
@@ -116,7 +116,7 @@
           </div>
 		  
 		  <div class="form-group">
-            <label for="nama_wi" class="col-sm-2 control-label">No. Dokumen</label>
+            <label for="no_dokumen" class="col-sm-2 control-label">No. Dokumen</label>
 
             <div class="col-sm-10">
               <input type="text" class="form-control" id="no_dokumen" name="no_dokumen" required>
@@ -124,7 +124,7 @@
           </div>
 
           <div class="form-group">
-            <label for="nama_wi" class="col-sm-2 control-label">No. Revisi</label>
+            <label for="no_revisi" class="col-sm-2 control-label">No. Revisi</label>
 
             <div class="col-sm-10">
               <input type="text" class="form-control" id="no_revisi" name="no_revisi" required>
@@ -132,10 +132,42 @@
           </div>
 
           <div class="form-group">
-            <label for="nama_wi" class="col-sm-2 control-label">Tanggal Eff</label>
+            <label for="tanggal_eff" class="col-sm-2 control-label">Tanggal Eff</label>
 
             <div class="col-sm-10">
               <input type="date" class="form-control" id="datepicker" name="tanggal_eff" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="tanggal_mulai" class="col-sm-2 control-label">Tanggal Mulai</label>
+
+            <div class="col-sm-10">
+              <input type="date" class="form-control" id="datepicker2" name="tanggal_mulai" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="tanggal_selesai" class="col-sm-2 control-label">Tanggal Selesai</label>
+
+            <div class="col-sm-10">
+              <input type="date" class="form-control" id="datepicker3" name="tanggal_selesai" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="angkatan" class="col-sm-2 control-label">Angkatan</label>
+
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="angkatan" name="angkatan" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="tahun" class="col-sm-2 control-label">Tahun</label>
+
+            <div class="col-sm-10">
+              <select name="tahun" id="yearpicker" required></select>
             </div>
           </div>
           
@@ -233,6 +265,23 @@
 	 		dateFormat:'yy-mm-dd'
 	    });
 	 });
+   $( function() {
+    $( "#datepicker2" ).datepicker({
+      dateFormat:'yy-mm-dd'
+      });
+   });
+   $( function() {
+    $( "#datepicker3" ).datepicker({
+      dateFormat:'yy-mm-dd'
+      });
+   });
+</script>
+
+<script>
+  for (i = new Date().getFullYear(); i > 1900; i--)
+  {
+    $('#yearpicker').append($('<option />').val(i).html(i));
+  }
 </script>
 
 </body>

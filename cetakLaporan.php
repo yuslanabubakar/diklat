@@ -1,13 +1,28 @@
 <?php
+	
+	$connection=mysqli_connect("127.0.0.1", "root", "", "diklatmedan");
+	mysqli_select_db($connection, "");
 
 	$day = date('w');
-	$week_start = date('d-m-Y', strtotime('-'.($day-1).' days'));
-	$week_end = date('d-m-Y', strtotime('+'.(7-$day).' days'));
+	$week_start = date('Y-m-d', strtotime('-'.($day-1).' days'));
+	$week_end = date('Y-m-d', strtotime('+'.(6-$day).' days'));
+	$minggu = date('d-m-Y', strtotime('+'.(7-$day).' days'));
 	
 	$nama_diklat = $_POST['listDiklat'];
 	$no_dokumen = $_POST['no_dokumen'];
 	$no_revisi = $_POST['no_revisi'];
-	$tanggal_eff = $_POST['tanggal_eff'];
+	$tanggal_eff = date("d-m-Y" , strtotime($_POST['tanggal_eff']));
+	$tanggal_mulai = date("d-m-Y" , strtotime($_POST['tanggal_mulai']));
+	$tanggal_selesai = date("d-m-Y" , strtotime($_POST['tanggal_selesai']));
+	$angkatan = $_POST['angkatan'];
+	$tahun = $_POST['tahun'];
+
+	$query=mysqli_query($connection, "SELECT * FROM jadwal where nama_diklat='" . $nama_diklat . "' and tanggal between '" . $week_start . "' and '" . $week_end . "' group by tanggal order by tanggal asc, waktu_mulai");
+
+	if (!$query) {
+	    printf("Error: %s\n", mysqli_error($connection));
+	    exit();
+	}
 
 ?>
 
@@ -52,7 +67,7 @@
 	<table border="1" height="8%" width="100%">
 		<tr>
 			<td rowspan="5" width="10%" align="center">
-				<img src="logo_diklat.jpg" style="width: 150px; height: 120px;">
+				<img src="logo_diklat.jpg" style="width: 150px; height: 100px; padding: 2px;">
 			</td>
 			<td colspan="3" width="70%" align="center">
 				<b>BADAN PENGEMBANGAN SUMBER DAYA MANUSIA
@@ -89,12 +104,12 @@
 		<tr>
 			<td>ANGKATAN / TAHUN</td>
 			<td>:</td>
-			<td>IX / 2017</td>
+			<td><?php echo $angkatan . " / " . $tahun; ?></td>
 		</tr>
 		<tr>
 			<td>TANGGAL PELAKSANAAN</td>
 			<td>:</td>
-			<td><b><?php echo $week_start . ' S.D ' . $week_end; ?></td>
+			<td><b><?php echo $tanggal_mulai . ' S.D ' . $tanggal_selesai; ?></td>
 		</tr>
 		<tr>
 			<td width="5%">PENYELENGGARA / LOKASI</td>
@@ -102,5 +117,156 @@
 			<td width="30%">BADAN PENGEMBANGAN SUMBER DAYA MANUSIA PROVINSI SUMATERA UTARA</td>
 		</tr>
 	</table>
+
+	<br>
+
+	<table border="1" width="100%">
+		<tr>
+			<td width="15%" align="center"><b> HARI / <br> TANGGAL</td>
+			<td width="15%" align="center"><b> WAKTU <br> (1 JP = 45')</td>
+			<td width="35%" align="center"><b> KEGIATAN / MATA DIKLAT</td>
+			<td width="5%" align="center"><b> JLH <br> JP</td>
+			<td width="30%" align="center"><b> WIDYAISWARA / <br> TENAGA PENGAJAR</td>
+		</tr>
+
+		<?php while ($row=mysqli_fetch_array($query)) {
+			$getTanggal = $row['tanggal'];
+			// $hitung = mysqli_query($connection , "SELECT * from jadwal where nama_diklat='" . $nama_diklat . "' and tanggal='"
+			// 	. $getTanggal . "'");\
+			// $hasil = 
+		 ?>
+
+		 	<!-- <tr>
+		 		<td>
+		 			<?php echo $row['hari'] . " / "?> <br> <?php echo date("d-m-Y" , strtotime($row['tanggal'])); ?>
+		 		</td>
+		 		<td>
+		 			<?php echo $row['waktu_mulai'] . "-" . $row['waktu_selesai']; ?>
+		 		</td>
+		 	</tr> -->
+
+			<tr>
+				<td align="center"><?php echo $row['hari'] . " / "?> <br> <?php echo date("d-m-Y" , strtotime($row['tanggal'])); ?></td>
+				<td>
+					<table border="0" align="center">
+						<?php
+							$query1 = mysqli_query($connection , "SELECT * from jadwal where nama_diklat='" . $row['nama_diklat'] . "' and tanggal='" . $getTanggal . "' order by waktu_mulai asc");
+
+							while ($row1=mysqli_fetch_array($query1)) {
+						?>
+						<tr>
+							<td align="center"><?php echo $row1['waktu_mulai'] . "-" . $row1['waktu_selesai']; ?></td>
+						</tr>
+						<?php } ?>
+					</table>
+				</td>
+				<td>
+					<table border="0" align="center">
+						<?php
+							$query1 = mysqli_query($connection , "SELECT * from jadwal where nama_diklat='" . $row['nama_diklat'] . "' and tanggal='" . $getTanggal . "' order by waktu_mulai asc");
+
+							while ($row1=mysqli_fetch_array($query1)) {
+						?>
+						<tr>
+							<td align="center"><?php echo $row1['kegiatan']; ?></td>
+						</tr>
+						<?php } ?>
+					</table>
+				</td>
+				<td>
+					<table border="0" align="center">
+						<?php
+							$query1 = mysqli_query($connection , "SELECT * from jadwal where nama_diklat='" . $row['nama_diklat'] . "' and tanggal='" . $getTanggal . "' order by waktu_mulai asc");
+
+							while ($row1=mysqli_fetch_array($query1)) {
+						?>
+						<tr>
+							<td align="center"><?php echo $row1['jumlah_jp']; ?></td>
+						</tr>
+						<?php } ?>
+					</table>
+				</td>
+				<td>
+					<table border="0" align="center">
+						<?php
+							$query1 = mysqli_query($connection , "SELECT * from jadwal where nama_diklat='" . $row['nama_diklat'] . "' and tanggal='" . $getTanggal . "' order by waktu_mulai asc");
+
+							while ($row1=mysqli_fetch_array($query1)) {
+						?>
+						<tr>
+							<td align="center"><?php echo $row1['widyaiswara']; ?></td>
+						</tr>
+						<?php } ?>
+					</table>
+				</td>
+			</tr>
+
+		<?php } ?>
+		<tr>
+			<td align="center"><b>
+				Sunday /
+				<br>
+				<?php echo $minggu; ?>
+			</td>
+			<td></td>
+			<td align="center"><b> LIBUR </td>
+			<td align="center"> - </td>
+			<td></td>
+		</tr>
+	</table>
+	<br>
+	<br>
+
+	<div class="">
+		<b><u>Catatan : </u></b>
+		<br>
+		10.15-10.30 ........ Istirahat
+		<br>
+		12.45-14.00 ........ Makan Siang
+		<br>
+		16.15-16.30 ........ Istirahat
+		<br>
+		18.45-19.40 ........ Istirahat / Makan Malam
+		<br>
+	</div>
+
+	<br>
+
+	<div class="" align="center" style="font-family: Times New Roman">
+		JADWAL DAPAT BERUBAH SEWAKTU-WAKTU
+	</div>
+
+	<br>
+
+	<table align="center" border="1" width="100%" style="font-family:Monotype Corsiva">
+		<tr>
+			<td align="center">
+				Dokumen ini milik Badan Pengembangan Sumber Daya Manusia Provinsi Sumatera Utara <br>
+				Dilarang memperbanyak dokumen ini atau menggunakan informasi didalamnya untuk keperluan komersial atau lain-lain <br>
+				tanpa ada persetujuan pemilik dokumen
+			</td>
+		</tr>
+	</table>
+
+	<br>
+	<div class="print" style="margin-left: 80%" id="cetak">
+		<a class="btn btn-primary addWI" href="#" onclick="javascript:cetakHalaman()">
+  		<i class="fa fa-print"></i> Cetak Laporan</a>
+	</div>
+	
 </body>
+
+<script>
+	function cetakHalaman() {
+		var print = document.getElementById('cetak');
+		print.style.display = 'none';
+		window.print();
+		print.style.display = 'block';
+	}
+
+	function tombolCetak() {
+		var x=1;
+	}
+</script>
+
 </html>

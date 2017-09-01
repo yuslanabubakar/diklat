@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <?php
+	define('BASE_URL', 'http://localhost:81/diklat/');
 	$connection=mysqli_connect("127.0.0.1", "root", "", "diklatmedan");
 	mysqli_select_db($connection, "");
 	$query=mysqli_query($connection, "SELECT * FROM jadwal order by tanggal desc, waktu_mulai");
-	$data = mysqli_query($connection, "SELECT * FROM pengajar");
+	$data = mysqli_query($connection, "SELECT nama FROM pengajar");
 ?>
 <html>
+<style>
+	.searchoption {
+		margin-left:70%;
+	}
+</style>
+
+<datalist id="listWI">
+	<?php while ($row = mysqli_fetch_array($data)) { ?>
+	<option value = "<?php echo $row['nama']; ?>">
+	<?php } ?>
+</datalist>
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,12 +52,6 @@
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
   <link rel="stylesheet" type="text/css" href="daterangepicker.css" />
-
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-  <link rel="stylesheet" href="/resources/demos/style.css">
-
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -92,100 +99,88 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Form Input Jadwal
+        JADWAL / KEGIATAN
       </h1>
+	  <h5 class="searchoption"><b>Pencarian : </b></h5>
+	  <form class="searchoption" action="result.php" method="Post">
+		  <div class="form-group">
+			  
+				<input type="text" placeholder="Masukkan Nama" list="listWI" name="widyaiswara">
+				
+			  
+		  </div>
+		  <div class="form-group">
+				<select name="pilihan">
+					<option value="bulan">Cari Berdasarkan Bulan</option>
+					<option value="tahun">Cari Berdasarkan Tahun</option>	
+				</select>
+		   </div>
+		   <div class="form-group">
+				<input type="submit" value="Cari">
+		   </div>
+	   </form>
+	   
+	   
     </section>
-  <div class="col-md-9">
-    <div class="box box-info">
-      <form class="form-horizontal" method="post" action="inputData.php">
-        <div class="box-body">
-          <div class="form-group">
-            <label for="inputTanggal" class="col-sm-2 control-label"><span align="left">Tanggal</span></label>
-
-            <div class="col-sm-10">
-              <input type="date" class="form-control" id="datepicker" name="inputTanggal" required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="inputMulai" class="col-sm-2 control-label">Waktu Mulai</label>
-
-            <div class="col-sm-10">
-              <input type="time" class="form-control" id="timepicker1" name="inputMulai" required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="inputSelesai" class="col-sm-2 control-label">Waktu Selesai</label>
-
-            <div class="col-sm-10">
-              <input type="time" class="form-control" id="timepicker2" name="inputSelesai" required>
-            </div>
-          </div>
-		  
-		  <div class="form-group">
-            <label for="nama_diklat" class="col-sm-2 control-label">Mata Pelajaran</label>
-
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="nama_diklat" name="nama_diklat" required>
-            </div>
-          </div>
-		  
-		  <div class="form-group">
-            <label for="kegiatan" class="col-sm-2 control-label">Kegiatan</label>
-
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="kegiatan" name="kegiatan" required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="inputJP" class="col-sm-2 control-label"><span align="left">Jumlah JP</span></label>
-              <div class="col-sm-10">
-                <select class="form-control" id="listJP" name="listJP" required>
-                  <option></option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-              </div>  
-          </div>
-		
-			<div class="form-group">
-              <label for="inputWI" class="col-sm-2 control-label">WidyaIswara</label>
-			
-              <div class="col-sm-10">
-                <select class="form-control" id="inputWI" name="inputWI" required>
-                  <option></option>
-                  <?php while ($dt = mysqli_fetch_array($data)) { ?>
-                  <option>
-                      <?php echo $dt['nama']; ?>
-                  </option>
-                  <?php } ?>
-                </select>
-              </div>
-            </div>
-          
-          </div>
-          <!-- /.box-body -->
-          <div class="box-footer">
-            <button type="reset" class="btn btn-default">Reset</button>
-            <button type="submit" class="btn btn-info pull-right">Simpan</button>
-          </div>
-          <!-- /.box-footer -->
-      </form>
-    </div>
-  </div>
+  
     <!-- Main content -->
     <section class="content">
-      <!-- Small boxes (Stat box) -->
-      
-      <!-- /.row -->
-      <!-- Main row -->
       <div class="row">
-      </div>
-      <!-- /.row (main row) -->
+        <div class="col-xs-12">
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th style="text-align:center" width="20%">HARI / TANGGAL</th>
+                  <th style="text-align:center" width="15%">WAKTU</th>
+				          <th style="text-align:center" width="15%">MATA PELAJARAN</th>
+                  <th style="text-align:center" width="15%">KEGIATAN</th>
+        				  <th style="text-align:center" width="10%">JLH JP</th>
+        				  <th style="text-align:center" width="25%">WIDYAISWARA</th>
+        				  <th style="text-align:center" width="15%">AKSI</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+					// $data=mysqli_fetch_array($query);
+					// print_r($data);
+				while($data=mysqli_fetch_array($query)){
+				?>
+							<tr>
+							<td align='center'><?php echo $data['hari'] . '/' . $data['tanggal']; ?></td>
+							<td align='center'><?php echo $data['waktu_mulai'] . '-' . $data['waktu_selesai']; ?></td>
+							<td align='center'><?php echo $data['nama_diklat']; ?></td>
+							<td align='center'><?php echo $data['kegiatan']; ?></td>
+							<td align='center'><?php echo $data['jumlah_jp']; ?></td>
+							<td align='center'><?php echo $data['widyaiswara']; ?></td>
+                <input type="hidden" id="id_jadwal" class="idjadwal" value="<?php echo $data['id_jadwal']; ?>">
+              <td align='center'>
+                <a href='javascript:deleteConfirm(<?php echo $data['id_jadwal']; ?>)' class='btn btn-danger'>
+                <i class='glyphicon glyphicon-trash'></i>
+                </a>
+                <a href='edit.php?id_jadwal=<?php echo $data['id_jadwal']; ?>' class='btn btn-alert'>
+                <i class='glyphicon glyphicon-edit'></i>
+                </a>
+              </td>
+						</tr>
+				<?php
+				}
+				?>
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
 
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
     </section>
     <!-- /.content -->
   </div>
@@ -250,24 +245,23 @@
 
 <script type="text/javascript" src="daterangepicker.js"></script>
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+
+
 
 <script>
-  $( function() {
-    $( "#datepicker" ).datepicker({
-      dateFormat:'yy-mm-dd'
-    });
-  });
-
-  $("#timepicker1").timepicker({
-    'timeFormat': 'HH:mm'
-  });
-
-  $("#timepicker2").timepicker({
-    'timeFormat': 'HH:mm'
-  });
+function deleteConfirm(tes) {
+  // var id_jadwal = document.getElementById('id_jadwal').value;
+  // var id_jadwal = $(".idjadwal").val();
+  // alert(tes);
+  var r = confirm("Yakin ingin menghapus data ?");
+  if (r == true) {
+      $.post( "delete.php", { id_jadwal : tes })
+      .done(function( data ) {
+        location.reload();
+      });
+  } 
+}
 </script>
 
 </body>

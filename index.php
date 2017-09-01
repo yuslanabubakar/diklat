@@ -1,24 +1,5 @@
 <!DOCTYPE html>
-<?php
-	define('BASE_URL', 'http://localhost:81/diklat/');
-	$connection=mysqli_connect("127.0.0.1", "root", "", "diklatmedan");
-	mysqli_select_db($connection, "");
-	$query=mysqli_query($connection, "SELECT * FROM jadwal order by tanggal desc, waktu_mulai");
-	$data = mysqli_query($connection, "SELECT nama FROM pengajar");
-?>
 <html>
-<style>
-	.searchoption {
-		margin-left:70%;
-	}
-</style>
-
-<datalist id="listWI">
-	<?php while ($row = mysqli_fetch_array($data)) { ?>
-	<option value = "<?php echo $row['nama']; ?>">
-	<?php } ?>
-</datalist>
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -52,6 +33,12 @@
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
   <link rel="stylesheet" type="text/css" href="daterangepicker.css" />
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <link rel="stylesheet" href="/resources/demos/style.css">
+
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -61,145 +48,20 @@
 </head>
 <body class="hold-transition skin-blue layout-boxed sidebar-mini">
 <div class="wrapper">
-
-  <header class="main-header">
-    <!-- Logo -->
-    <a href="index.php" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>D</b>IK</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>DIKLAT </b>MEDAN</span>
-    </a>
-    <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
-      <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
-    </nav>
-  </header>
-  <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-      <!-- Sidebar user panel -->
-      <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu">
-        <li><a href="index.php"><i class="fa fa-fw fa-desktop"></i> <span>Halaman Utama</span></a></li>
-        <li><a href="input_jadwal.php"><i class="fa fa-book"></i> <span>Input Jadwal</span></a></li>
-        <li><a href="dataWidyaiswara.php"><i class="fa fa-user" aria-hidden="true"></i> <span>Data Widyaiswara</span></a></li>
-        <li><a href="laporan.php"><i class="fa fa-file" aria-hidden="true"></i> <span>Cetak Laporan</span></a></li>
-      </ul>
-    </section>
-    <!-- /.sidebar -->
-  </aside>
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        JADWAL / KEGIATAN
-      </h1>
-	  <h5 class="searchoption"><b>Pencarian : </b></h5>
-	  <form class="searchoption" action="result.php" method="Post">
-		  <div class="form-group">
-			  
-				<input type="text" placeholder="Masukkan Nama" list="listWI" name="widyaiswara">
-				
-			  
-		  </div>
-		  <div class="form-group">
-				<select name="pilihan">
-					<option value="bulan">Cari Berdasarkan Bulan</option>
-					<option value="tahun">Cari Berdasarkan Tahun</option>	
-				</select>
-		   </div>
-		   <div class="form-group">
-				<input type="submit" value="Cari">
-		   </div>
-	   </form>
-	   
-	   
-    </section>
-  
-    <!-- Main content -->
-    <section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th style="text-align:center" width="20%">HARI / TANGGAL</th>
-                  <th style="text-align:center" width="15%">WAKTU</th>
-				          <th style="text-align:center" width="15%">MATA PELAJARAN</th>
-                  <th style="text-align:center" width="15%">KEGIATAN</th>
-        				  <th style="text-align:center" width="10%">JLH JP</th>
-        				  <th style="text-align:center" width="25%">WIDYAISWARA</th>
-        				  <th style="text-align:center" width="15%">AKSI</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-					// $data=mysqli_fetch_array($query);
-					// print_r($data);
-				while($data=mysqli_fetch_array($query)){
-				?>
-							<tr>
-							<td align='center'><?php echo $data['hari'] . '/' . $data['tanggal']; ?></td>
-							<td align='center'><?php echo $data['waktu_mulai'] . '-' . $data['waktu_selesai']; ?></td>
-							<td align='center'><?php echo $data['nama_diklat']; ?></td>
-							<td align='center'><?php echo $data['kegiatan']; ?></td>
-							<td align='center'><?php echo $data['jumlah_jp']; ?></td>
-							<td align='center'><?php echo $data['widyaiswara']; ?></td>
-                <input type="hidden" id="id_jadwal" class="idjadwal" value="<?php echo $data['id_jadwal']; ?>">
-              <td align='center'>
-                <a href='javascript:deleteConfirm(<?php echo $data['id_jadwal']; ?>)' class='btn btn-danger'>
-                <i class='glyphicon glyphicon-trash'></i>
-                </a>
-                <a href='edit.php?id_jadwal=<?php echo $data['id_jadwal']; ?>' class='btn btn-alert'>
-                <i class='glyphicon glyphicon-edit'></i>
-                </a>
-              </td>
-						</tr>
-				<?php
-				}
-				?>
-                </tbody>
-                <tfoot>
-                </tfoot>
-              </table>
-
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      
+    <div class="" style="color: white; margin-top: 8%;">
+      <h3 align="center">APLIKASI PENJADWALAN <br> BADAN PENGEMBANGAN SUMBER DAYA MANUSIA PROVINSI SUMATERA UTARA</h1>
     </div>
-    <strong>Copyright &copy; 2017-2018 Badan Pendidikan dan Pelatihan Kota Medan .</strong> All rights
-    reserved.
-  </footer>
+    <table border="0" style="margin-top: 5%;" align="center">
+      <tr>
+        <td>
+          <img src="logo_diklat.png" style="width: 300px; height: 300px;">
+        </td>
+      </tr>
+    </table>
 
-  <!-- Control Sidebar -->
-  <aside>
-  </aside>
-  <!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
+    <div class="print" style="margin-left: 33%; margin-top: 4%;" id="cetak">
+      <a class="btn btn-primary addWI" href="/diklat/home.php" style="width: 50%; height: 50%; font-size: 18pt;"> MASUK </a>
+    </div>
 </div>
 <!-- ./wrapper -->
 
@@ -245,24 +107,9 @@
 
 <script type="text/javascript" src="daterangepicker.js"></script>
 
-
-
-
-
-<script>
-function deleteConfirm(tes) {
-  // var id_jadwal = document.getElementById('id_jadwal').value;
-  // var id_jadwal = $(".idjadwal").val();
-  // alert(tes);
-  var r = confirm("Yakin ingin menghapus data ?");
-  if (r == true) {
-      $.post( "delete.php", { id_jadwal : tes })
-      .done(function( data ) {
-        location.reload();
-      });
-  } 
-}
-</script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
 </body>
 </html>
