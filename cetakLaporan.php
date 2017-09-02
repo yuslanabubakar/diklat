@@ -67,7 +67,7 @@
 	<table border="1" height="8%" width="100%">
 		<tr>
 			<td rowspan="5" width="10%" align="center">
-				<img src="logo_diklat.jpg" style="width: 150px; height: 100px; padding: 2px;">
+				<img src="logo_diklat.png" style="width: 150px; height: 100px; padding: 2px;">
 			</td>
 			<td colspan="3" width="70%" align="center">
 				<b>BADAN PENGEMBANGAN SUMBER DAYA MANUSIA
