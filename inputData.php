@@ -10,6 +10,7 @@
 	$hari = $datetime->format('l');
 	$waktuMulai = mysql_real_escape_string($_POST['inputMulai']);
 	$waktuSelesai = mysql_real_escape_string($_POST['inputSelesai']);
+	$penyelenggara = mysql_real_escape_string($_POST['penyelenggara']);
 	$nama_diklat = mysql_real_escape_string($_POST['nama_diklat']);
 	$kegiatan = mysql_real_escape_string($_POST['kegiatan']);
 	$jp = mysql_real_escape_string($_POST['listJP']);
@@ -22,7 +23,7 @@
 	$diklatAda = "";
 	$kegiatanAda = "";
 	if ($getData[0] == null) {
-		$query = mysqli_query($connection , "INSERT into jadwal (hari,tanggal,waktu_mulai,waktu_selesai,nama_diklat,kegiatan,jumlah_jp,widyaiswara) values ('$hari','$tanggal_db','$waktuMulai','$waktuSelesai','$nama_diklat','$kegiatan','$jp','$wi')");
+		$query = mysqli_query($connection , "INSERT into jadwal (hari,tanggal,waktu_mulai,waktu_selesai,penyelenggara,nama_diklat,kegiatan,jumlah_jp,widyaiswara) values ('$hari','$tanggal_db','$waktuMulai','$waktuSelesai','$penyelenggara',$nama_diklat','$kegiatan','$jp','$wi')");
 		if ($query) {
 			header('location: index.php');
 		}
@@ -51,7 +52,7 @@
 		}
 		
 		if ($cek == 1) {
-			$query = mysqli_query($connection , "INSERT into jadwal (hari,tanggal,waktu_mulai,waktu_selesai,nama_diklat,kegiatan,jumlah_jp,widyaiswara) values ('$hari','$tanggal_db','$waktuMulai','$waktuSelesai','$nama_diklat','$kegiatan','$jp','$wi')");
+			$query = mysqli_query($connection , "INSERT into jadwal (hari,tanggal,waktu_mulai,waktu_selesai,penyelenggara,nama_diklat,kegiatan,jumlah_jp,widyaiswara) values ('$hari','$tanggal_db','$waktuMulai','$waktuSelesai','$penyelenggara',$nama_diklat','$kegiatan','$jp','$wi')");
 			if ($query) {
 				echo "<script>alert('Input Data Jadwal Berhasil'); window.location = 'index.php';</script>";
 			}

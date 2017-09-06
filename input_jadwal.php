@@ -122,8 +122,16 @@
               <input type="time" class="form-control" id="timepicker2" name="inputSelesai" required>
             </div>
           </div>
+
+          <div class="form-group">
+            <label for="penyelenggara" class="col-sm-2 control-label">Penyelenggara</label>
+
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="penyelenggara" name="penyelenggara" required>
+            </div>
+          </div>
 		  
-		  <div class="form-group">
+		      <div class="form-group">
             <label for="nama_diklat" class="col-sm-2 control-label">Mata Pelajaran</label>
 
             <div class="col-sm-10">
@@ -131,7 +139,7 @@
             </div>
           </div>
 		  
-		  <div class="form-group">
+		      <div class="form-group">
             <label for="kegiatan" class="col-sm-2 control-label">Kegiatan</label>
 
             <div class="col-sm-10">

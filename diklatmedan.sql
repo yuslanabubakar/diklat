@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2017 at 07:49 AM
+-- Generation Time: Sep 06, 2017 at 02:51 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -32,24 +32,12 @@ CREATE TABLE IF NOT EXISTS `jadwal` (
   `tanggal` date NOT NULL,
   `waktu_mulai` varchar(5) NOT NULL,
   `waktu_selesai` varchar(5) NOT NULL,
-  `nama_diklat` varchar(100) NOT NULL,
-  `kegiatan` varchar(100) NOT NULL,
+  `penyelenggara` varchar(100) NOT NULL,
+  `nama_diklat` varchar(200) NOT NULL,
+  `kegiatan` varchar(200) NOT NULL,
   `jumlah_jp` int(2) NOT NULL,
   `widyaiswara` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `jadwal`
---
-
-INSERT INTO `jadwal` (`id_jadwal`, `hari`, `tanggal`, `waktu_mulai`, `waktu_selesai`, `nama_diklat`, `kegiatan`, `jumlah_jp`, `widyaiswara`) VALUES
-(1, 'Monday', '2017-07-31', '08:00', '09:00', 'Diklat 1', 'Kegiatan 1', 1, 'Yuswar Effendy, SE, MM'),
-(2, 'Tuesday', '2017-08-01', '09:00', '10:00', 'Diklat 2', 'Kegiatan 2', 1, 'Yuswar Effendy, SE, MM'),
-(3, 'Wednesday', '2017-08-02', '10:00', '13:00', 'Diklat 1', 'Kegiatan 1', 3, 'Yuswar Effendy, SE, MM'),
-(4, 'Monday', '2017-07-31', '13:00', '16:00', 'Diklat 3', 'Kegiatan 2', 3, 'Yuswar Effendy, SE, MM'),
-(5, 'Thursday', '2017-08-10', '08:00', '10:00', 'Diklat 2', 'Kegiatan 3', 2, 'Drs. H. Sobirin, SH, MSi'),
-(6, 'Sunday', '2017-07-30', '13:00', '14:00', 'Diklat 1', 'Kegiatan 3', 1, 'Ir. M. Syafril Harahap, MSi'),
-(7, 'Tuesday', '2018-01-09', '15:00', '17:00', 'Diklat 3', 'Kegiatan 2', 2, 'Toms Hamonangan, M.Hum');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -115,7 +103,7 @@ ALTER TABLE `pengajar`
 -- AUTO_INCREMENT for table `jadwal`
 --
 ALTER TABLE `jadwal`
-MODIFY `id_jadwal` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `id_jadwal` int(10) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

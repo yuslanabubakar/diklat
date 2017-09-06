@@ -13,6 +13,7 @@
 	$hari = $datetime->format('l');
 	$waktuMulai = mysql_real_escape_string($_POST['inputMulai']);
 	$waktuSelesai = mysql_real_escape_string($_POST['inputSelesai']);
+	$penyelenggara = mysql_real_escape_string($_POST['penyelenggara']);
 	$namaDiklat = mysql_real_escape_string($_POST['nama_diklat']);
 	$kegiatan = mysql_real_escape_string($_POST['kegiatan']);
 	$jumlahJP = mysql_real_escape_string($_POST['listJP']);
@@ -49,10 +50,9 @@
 		}
 		
 		if ($cek == 1) {
-			$query = mysqli_query($connection , "UPDATE jadwal set hari='" . $hari . "', tanggal='" . $tanggal . "', waktu_mulai='" . $waktuMulai . "', waktu_selesai='" . $waktuSelesai .
-				"', nama_diklat='" . $namaDiklat . "', kegiatan='" . $kegiatan . "', jumlah_jp=" . $jumlahJP . " where id_jadwal=" . $id_jadwal);
+			$query = mysqli_query($connection , "UPDATE jadwal set hari='" . $hari . "', tanggal='" . $tanggal . "', waktu_mulai='" . $waktuMulai . "', waktu_selesai='" . $waktuSelesai . "', nama_diklat='" . $namaDiklat . "', kegiatan='" . $kegiatan . "', jumlah_jp=" . $jumlahJP . " where id_jadwal=" . $id_jadwal);
 			if ($query) {
-				echo "<script>alert('Data Jadwal Berhasil Diganti'); window.location = 'index.php';</script>";
+				echo "<script>alert('Data Jadwal Berhasil Diganti'); window.location = 'home.php';</script>";
 			}
 			else {
 				echo mysqli_error($connection);

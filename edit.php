@@ -8,6 +8,7 @@
   $tanggal = "";
   $waktuMulai = "";
   $waktuSelesai = "";
+  $penyelenggara = "";
   $namaDiklat = "";
   $namaKegiatan = "";
   $jumlahJP = 0;
@@ -140,8 +141,16 @@
               <input type="time" class="form-control" id="timepicker2" name="inputSelesai" value="<?php echo $waktuSelesai; ?>" required>
             </div>
           </div>
+
+          <div class="form-group">
+            <label for="penyelenggara" class="col-sm-2 control-label">Penyelenggara</label>
+
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="penyelenggara" name="penyelenggara" value="<?php echo $penyelenggara; ?>" required>
+            </div>
+          </div>
 		  
-		  <div class="form-group">
+		      <div class="form-group">
             <label for="nama_diklat" class="col-sm-2 control-label">Mata Pelajaran</label>
 
             <div class="col-sm-10">
