@@ -17,6 +17,7 @@
     $tanggal = $data['tanggal'];
     $waktuMulai = $data['waktu_mulai'];
     $waktuSelesai = $data['waktu_selesai'];
+    $penyelenggara = $data['penyelenggara'];
     $namaDiklat = $data['nama_diklat'];
     $namaKegiatan = $data['kegiatan'];
     $jumlahJP = $data['jumlah_jp'];

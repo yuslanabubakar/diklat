@@ -14,15 +14,29 @@
 ?>
 <html>
 <style>
-	.searchoption {
-		margin-left:70%;
-	}
+  .searchoption {
+    margin-left:60%;
+  }
+</style>
+<style>
+  .searchoptionP {
+    margin-left:80%;
+    margin-top:-12%;
+  }
 </style>
 
 <datalist id="listWI">
 	<?php while ($row = mysqli_fetch_array($data)) { ?>
 	<option value = "<?php echo $row['nama']; ?>">
 	<?php } ?>
+</datalist>
+
+<datalist id="listP">
+  <?php 
+  $dataP = mysqli_query($connection , "SELECT penyelenggara FROM jadwal group by penyelenggara");
+  while ($row = mysqli_fetch_array($dataP)) { ?>
+  <option value = "<?php echo $row['penyelenggara']; ?>">
+  <?php } ?>
 </datalist>
 
 <head>
@@ -125,6 +139,24 @@
 				<input type="submit" value="Cari">
 		   </div>
 	   </form>
+
+     <form class="searchoptionP" action="resultP.php" method="Post">
+      <div class="form-group">
+        
+        <input type="text" placeholder="Nama Penyelenggara" list="listP" name="listP">
+        
+        
+      </div>
+      <div class="form-group">
+        <select name="pilihanP">
+          <option value="bulan">Cari Berdasarkan Bulan</option>
+          <option value="tahun">Cari Berdasarkan Tahun</option> 
+        </select>
+       </div>
+       <div class="form-group">
+        <input type="submit" value="Cari Penyelenggara">
+       </div>
+     </form>
 	   
 	   
     </section>
@@ -139,13 +171,14 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th width="20%" style="text-align:center">HARI / TANGGAL</th>
-                  <th width="15%" style="text-align:center">WAKTU</th>
-				          <th width="15%" style="text-align:center">NAMA DIKLAT</th>
-                  <th width="15%" style="text-align:center">KEGIATAN</th>
-        				  <th width="10%" style="text-align:center">JLH JP</th>
-        				  <th width="25%" style="text-align:center">WIDYAISWARA</th>
-        				  <th width="15%" style="text-align:center">AKSI</th>
+                  <th style="text-align:center" width="18%">HARI / TANGGAL</th>
+                  <th style="text-align:center" width="13%">WAKTU</th>
+                  <th style="text-align:center" width="15%">MATA PELAJARAN</th>
+                  <th style="text-align:center" width="15%">KEGIATAN</th>
+                  <th style="text-align:center" width="7%">PENYELENGGARA</th>
+                  <th style="text-align:center" width="10%">JLH JP</th>
+                  <th style="text-align:center" width="22%">WIDYAISWARA</th>
+                  <th style="text-align:center" width="15%">AKSI</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -164,13 +197,14 @@
 							while ($dt = mysqli_fetch_array($data)) {
 								if (substr($dt['tanggal'],0,7) == $tahunbulan) {
 									echo "<tr>
-											<td>$dt[hari] / $dt[tanggal]</td>
-											<td>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
-											<td>$dt[nama_diklat]</td>
-											<td>$dt[kegiatan]</td>
-											<td>$dt[jumlah_jp]</td>
-											<td>$dt[widyaiswara]</td>
-											<td>";
+											<td align='center'>$dt[hari] / $dt[tanggal]</td>
+											<td align='center'>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
+											<td align='center'>$dt[nama_diklat]</td>
+											<td align='center'>$dt[kegiatan]</td>
+                      <td align='center'>$dt[penyelenggara]</td>
+											<td align='center'>$dt[jumlah_jp]</td>
+											<td align='center'>$dt[widyaiswara]</td>
+											<td align='center'>";
                       echo "<a href='javascript:deleteConfirm(".$dt['id_jadwal'].")' class='btn btn-danger'>
 												<i class='glyphicon glyphicon-trash'></i>
 												</a>";
@@ -204,13 +238,14 @@
 							while ($dt = mysqli_fetch_array($data)) {
 								if (substr($dt['tanggal'],0,4) == $tahun) {
 									echo "<tr>
-											<td>$dt[hari] / $dt[tanggal]</td>
-											<td>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
-											<td>$dt[nama_diklat]</td>
-											<td>$dt[kegiatan]</td>
-											<td>$dt[jumlah_jp]</td>
-											<td>$dt[widyaiswara]</td>
-											<td>";
+											<td align='center'>$dt[hari] / $dt[tanggal]</td>
+											<td align='center'>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
+											<td align='center'>$dt[nama_diklat]</td>
+                      <td align='center'>$dt[kegiatan]</td>
+                      <td align='center'>$dt[penyelenggara]</td>
+											<td align='center'>$dt[jumlah_jp]</td>
+											<td align='center'>$dt[widyaiswara]</td>
+											<td align='center'>";
                       echo "<a href='javascript:deleteConfirm(".$dt['id_jadwal'].")' class='btn btn-danger'>
                         <i class='glyphicon glyphicon-trash'></i>
                         </a>";

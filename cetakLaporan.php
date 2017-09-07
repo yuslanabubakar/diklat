@@ -122,11 +122,12 @@
 
 	<table border="1" width="100%">
 		<tr>
-			<td width="15%" align="center"><b> HARI / <br> TANGGAL</td>
-			<td width="15%" align="center"><b> WAKTU <br> (1 JP = 45')</td>
-			<td width="35%" align="center"><b> KEGIATAN / MATA DIKLAT</td>
+			<td width="13%" align="center"><b> HARI / <br> TANGGAL</td>
+			<td width="14%" align="center"><b> WAKTU <br> (1 JP = 45')</td>
+			<td width="30%" align="center"><b> KEGIATAN / MATA DIKLAT</td>
+			<td width="11%" align="center"><b> PENYELENGGARA</td>
 			<td width="5%" align="center"><b> JLH <br> JP</td>
-			<td width="30%" align="center"><b> WIDYAISWARA / <br> TENAGA PENGAJAR</td>
+			<td width="27%" align="center"><b> WIDYAISWARA / <br> TENAGA PENGAJAR</td>
 		</tr>
 
 		<?php while ($row=mysqli_fetch_array($query)) {
@@ -181,6 +182,19 @@
 							while ($row1=mysqli_fetch_array($query1)) {
 						?>
 						<tr>
+							<td align="center"><?php echo $row1['penyelenggara']; ?></td>
+						</tr>
+						<?php } ?>
+					</table>
+				</td>
+				<td>
+					<table border="0" align="center">
+						<?php
+							$query1 = mysqli_query($connection , "SELECT * from jadwal where nama_diklat='" . $row['nama_diklat'] . "' and tanggal='" . $getTanggal . "' order by waktu_mulai asc");
+
+							while ($row1=mysqli_fetch_array($query1)) {
+						?>
+						<tr>
 							<td align="center"><?php echo $row1['jumlah_jp']; ?></td>
 						</tr>
 						<?php } ?>
@@ -211,6 +225,7 @@
 			<td></td>
 			<td align="center"><b> LIBUR </td>
 			<td align="center"> - </td>
+			<td></td>
 			<td></td>
 		</tr>
 	</table>

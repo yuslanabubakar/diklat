@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <?php
-	define('BASE_URL', 'http://localhost:81/diklat/');
 	$connection=mysqli_connect("127.0.0.1", "root", "", "diklatmedan");
 	mysqli_select_db($connection, "");
-	$query=mysqli_query($connection, "SELECT * FROM jadwal order by tanggal desc, waktu_mulai");
+	$query=mysqli_query($connection, "SELECT * FROM jadwal");
 	$data = mysqli_query($connection, "SELECT nama FROM pengajar");
+	
+	$penyelenggara = $_POST['listP'];
+	$pilihan = $_POST['pilihanP'];
+	$tahun = date("Y");
+	$tahunbulan = date("Y")."-".date("m");
+	
+	$cek = 0;
 ?>
 <html>
 <style>
-	.searchoption {
-		margin-left:60%;
-	}
+  .searchoption {
+    margin-left:60%;
+  }
 </style>
 <style>
   .searchoptionP {
@@ -119,7 +125,7 @@
 	  <form class="searchoption" action="result.php" method="Post">
 		  <div class="form-group">
 			  
-				<input type="text" placeholder="Nama Widyaiswara" list="listWI" name="widyaiswara">
+				<input type="text" placeholder="Masukkan Nama" list="listWI" name="widyaiswara">
 				
 			  
 		  </div>
@@ -130,11 +136,11 @@
 				</select>
 		   </div>
 		   <div class="form-group">
-				<input type="submit" value="Cari Widyaiswara">
+				<input type="submit" value="Cari">
 		   </div>
 	   </form>
 
-    <form class="searchoptionP" action="resultP.php" method="Post">
+     <form class="searchoptionP" action="resultP.php" method="Post">
       <div class="form-group">
         
         <input type="text" placeholder="Nama Penyelenggara" list="listP" name="listP">
@@ -167,46 +173,105 @@
                 <tr>
                   <th style="text-align:center" width="18%">HARI / TANGGAL</th>
                   <th style="text-align:center" width="13%">WAKTU</th>
-				          <th style="text-align:center" width="15%">MATA PELAJARAN</th>
+                  <th style="text-align:center" width="15%">MATA PELAJARAN</th>
                   <th style="text-align:center" width="15%">KEGIATAN</th>
                   <th style="text-align:center" width="7%">PENYELENGGARA</th>
-        				  <th style="text-align:center" width="10%">JLH JP</th>
-        				  <th style="text-align:center" width="22%">WIDYAISWARA</th>
-        				  <th style="text-align:center" width="15%">AKSI</th>
+                  <th style="text-align:center" width="10%">JLH JP</th>
+                  <th style="text-align:center" width="22%">WIDYAISWARA</th>
+                  <th style="text-align:center" width="15%">AKSI</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
-					// $data=mysqli_fetch_array($query);
-					// print_r($data);
-				while($data=mysqli_fetch_array($query)){
+					
+					if ($pilihan == "bulan") {
+						$total = 0;
+						$data = mysqli_query($connection , "SELECT * from jadwal where penyelenggara='".$penyelenggara."' order by tanggal desc, waktu_mulai");
+						if (mysqli_num_rows($data) == 0) { 
+						?>
+							<h1 style="color:red;">Data tidak ditemukan</h1>
+						<?php
+						}
+						else {
+							$totalData = 0;
+							while ($dt = mysqli_fetch_array($data)) {
+								if (substr($dt['tanggal'],0,7) == $tahunbulan) {
+									echo "<tr>
+											<td align='center'>$dt[hari] / $dt[tanggal]</td>
+                      <td align='center'>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
+                      <td align='center'>$dt[nama_diklat]</td>
+                      <td align='center'>$dt[kegiatan]</td>
+                      <td align='center'>$dt[penyelenggara]</td>
+                      <td align='center'>$dt[jumlah_jp]</td>
+                      <td align='center'>$dt[widyaiswara]</td>
+                      <td align='center'>";
+                      echo "<a href='javascript:deleteConfirm(".$dt['id_jadwal'].")' class='btn btn-danger'>
+												<i class='glyphicon glyphicon-trash'></i>
+												</a>";
+                      echo "<a href='edit.php?id_jadwal=".$dt['id_jadwal']."' class='btn btn-alert'>";
+												echo "<i class='glyphicon glyphicon-edit'></i>
+												</a>
+											</td>
+										</tr>";
+									$total = $total + $dt['jumlah_jp'];
+									$totalData = $totalData + 1;
+								}
+							}
+							if ($totalData == 0) {
+								?>
+									<h1 style="color:red;">Data tidak ditemukan</h1>
+								<?php
+							}
+						}
+						
+					}
+					else if ($pilihan == "tahun") {
+						$total = 0;
+						$data = mysqli_query($connection , "SELECT * from jadwal where penyelenggara='".$penyelenggara."' order by tanggal desc, waktu_mulai");
+						if (mysqli_num_rows($data) == 0) { 
+						?>
+							<h1 style="color:red;">Data tidak ditemukan</h1>
+						<?php
+						}
+						else {
+							$totalData = 0;
+							while ($dt = mysqli_fetch_array($data)) {
+								if (substr($dt['tanggal'],0,4) == $tahun) {
+									echo "<tr>
+											<td align='center'>$dt[hari] / $dt[tanggal]</td>
+                      <td align='center'>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
+                      <td align='center'>$dt[nama_diklat]</td>
+                      <td align='center'>$dt[kegiatan]</td>
+                      <td align='center'>$dt[penyelenggara]</td>
+                      <td align='center'>$dt[jumlah_jp]</td>
+                      <td align='center'>$dt[widyaiswara]</td>
+                      <td align='center'>";
+                      echo "<a href='javascript:deleteConfirm(".$dt['id_jadwal'].")' class='btn btn-danger'>
+                        <i class='glyphicon glyphicon-trash'></i>
+                        </a>";
+                      echo "<a href='edit.php?id_jadwal=".$dt['id_jadwal']."' class='btn btn-alert'>";
+                        echo "<i class='glyphicon glyphicon-edit'></i>
+                        </a>
+                      </td>
+										</tr>";
+									$total = $total + $dt['jumlah_jp'];
+									$totalData = $totalData + 1;
+								}
+							}
+							if ($totalData == 0) {
+								?>
+									<h1 style="color:red;">Data tidak ditemukan</h1>
+								<?php
+							}
+						}
+					}
 				?>
-							<tr>
-							<td align='center'><?php echo $data['hari'] . '/' . $data['tanggal']; ?></td>
-							<td align='center'><?php echo $data['waktu_mulai'] . '-' . $data['waktu_selesai']; ?></td>
-							<td align='center'><?php echo $data['nama_diklat']; ?></td>
-							<td align='center'><?php echo $data['kegiatan']; ?></td>
-              <td align='center'><?php echo $data['penyelenggara']; ?></td>
-							<td align='center'><?php echo $data['jumlah_jp']; ?></td>
-							<td align='center'><?php echo $data['widyaiswara']; ?></td>
-                <input type="hidden" id="id_jadwal" class="idjadwal" value="<?php echo $data['id_jadwal']; ?>">
-              <td align='center'>
-                <a href='javascript:deleteConfirm(<?php echo $data['id_jadwal']; ?>)' class='btn btn-danger'>
-                <i class='glyphicon glyphicon-trash'></i>
-                </a>
-                <a href='edit.php?id_jadwal=<?php echo $data['id_jadwal']; ?>' class='btn btn-alert'>
-                <i class='glyphicon glyphicon-edit'></i>
-                </a>
-              </td>
-						</tr>
-				<?php
-				}
-				?>
+				<th colspan="4"> Total JP</th>
+				<th><?php echo $total ?> </th>
                 </tbody>
                 <tfoot>
                 </tfoot>
               </table>
-
             </div>
             <!-- /.box-body -->
           </div>
@@ -279,15 +344,24 @@
 
 <script type="text/javascript" src="daterangepicker.js"></script>
 
-
-
-
+<script>
+  $('input[name="daterange"]').daterangepicker(
+  {
+      locale: {
+        format: 'DD-MM-YYYY'
+      },
+      startDate: '01-01-2017',
+      endDate: '12-12-2020'
+  }, 
+  function(start, end, label) {
+      alert("A new date range was chosen: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+	  day = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+	  document.getElementById("inputWaktu").value = day + " hari";
+  });
+</script>
 
 <script>
 function deleteConfirm(tes) {
-  // var id_jadwal = document.getElementById('id_jadwal').value;
-  // var id_jadwal = $(".idjadwal").val();
-  // alert(tes);
   var r = confirm("Yakin ingin menghapus data ?");
   if (r == true) {
       $.post( "delete.php", { id_jadwal : tes })
