@@ -133,12 +133,13 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th style="text-align:center" width="20%">HARI / TANGGAL</th>
-                  <th style="text-align:center" width="15%">WAKTU</th>
+                  <th style="text-align:center" width="18%">HARI / TANGGAL</th>
+                  <th style="text-align:center" width="13%">WAKTU</th>
 				          <th style="text-align:center" width="15%">MATA PELAJARAN</th>
                   <th style="text-align:center" width="15%">KEGIATAN</th>
+                  <th style="text-align:center" width="7%">PENYELENGGARA</th>
         				  <th style="text-align:center" width="10%">JLH JP</th>
-        				  <th style="text-align:center" width="25%">WIDYAISWARA</th>
+        				  <th style="text-align:center" width="22%">WIDYAISWARA</th>
         				  <th style="text-align:center" width="15%">AKSI</th>
                 </tr>
                 </thead>
@@ -153,6 +154,7 @@
 							<td align='center'><?php echo $data['waktu_mulai'] . '-' . $data['waktu_selesai']; ?></td>
 							<td align='center'><?php echo $data['nama_diklat']; ?></td>
 							<td align='center'><?php echo $data['kegiatan']; ?></td>
+              <td align='center'><?php echo $data['penyelenggara']; ?></td>
 							<td align='center'><?php echo $data['jumlah_jp']; ?></td>
 							<td align='center'><?php echo $data['widyaiswara']; ?></td>
                 <input type="hidden" id="id_jadwal" class="idjadwal" value="<?php echo $data['id_jadwal']; ?>">

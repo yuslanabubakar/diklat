@@ -23,9 +23,9 @@
 	$diklatAda = "";
 	$kegiatanAda = "";
 	if ($getData[0] == null) {
-		$query = mysqli_query($connection , "INSERT into jadwal (hari,tanggal,waktu_mulai,waktu_selesai,penyelenggara,nama_diklat,kegiatan,jumlah_jp,widyaiswara) values ('$hari','$tanggal_db','$waktuMulai','$waktuSelesai','$penyelenggara',$nama_diklat','$kegiatan','$jp','$wi')");
+		$query = mysqli_query($connection , "INSERT into jadwal (hari,tanggal,waktu_mulai,waktu_selesai,penyelenggara,nama_diklat,kegiatan,jumlah_jp,widyaiswara) values ('$hari','$tanggal_db','$waktuMulai','$waktuSelesai','$penyelenggara','$nama_diklat','$kegiatan','$jp','$wi')");
 		if ($query) {
-			header('location: index.php');
+			header('location: home.php');
 		}
 		else {
 			echo mysqli_error($connection);
@@ -52,9 +52,9 @@
 		}
 		
 		if ($cek == 1) {
-			$query = mysqli_query($connection , "INSERT into jadwal (hari,tanggal,waktu_mulai,waktu_selesai,penyelenggara,nama_diklat,kegiatan,jumlah_jp,widyaiswara) values ('$hari','$tanggal_db','$waktuMulai','$waktuSelesai','$penyelenggara',$nama_diklat','$kegiatan','$jp','$wi')");
+			$query = mysqli_query($connection , "INSERT into jadwal (hari,tanggal,waktu_mulai,waktu_selesai,penyelenggara,nama_diklat,kegiatan,jumlah_jp,widyaiswara) values ('$hari','$tanggal_db','$waktuMulai','$waktuSelesai','$penyelenggara','$nama_diklat','$kegiatan','$jp','$wi')");
 			if ($query) {
-				echo "<script>alert('Input Data Jadwal Berhasil'); window.location = 'index.php';</script>";
+				echo "<script>alert('Input Data Jadwal Berhasil'); window.location = 'home.php';</script>";
 			}
 			else {
 				echo mysqli_error($connection);

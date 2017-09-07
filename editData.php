@@ -50,7 +50,7 @@
 		}
 		
 		if ($cek == 1) {
-			$query = mysqli_query($connection , "UPDATE jadwal set hari='" . $hari . "', tanggal='" . $tanggal . "', waktu_mulai='" . $waktuMulai . "', waktu_selesai='" . $waktuSelesai . "', nama_diklat='" . $namaDiklat . "', kegiatan='" . $kegiatan . "', jumlah_jp=" . $jumlahJP . " where id_jadwal=" . $id_jadwal);
+			$query = mysqli_query($connection , "UPDATE jadwal set hari='" . $hari . "', tanggal='" . $tanggal . "', waktu_mulai='" . $waktuMulai . "', waktu_selesai='" . $waktuSelesai . "', penyelenggara='" . $penyelenggara . "', nama_diklat='" . $namaDiklat . "', kegiatan='" . $kegiatan . "', jumlah_jp=" . $jumlahJP . " where id_jadwal=" . $id_jadwal);
 			if ($query) {
 				echo "<script>alert('Data Jadwal Berhasil Diganti'); window.location = 'home.php';</script>";
 			}
