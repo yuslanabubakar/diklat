@@ -6,24 +6,27 @@
 	$data = mysqli_query($connection, "SELECT nama FROM pengajar");
 	
 	$widyaiswara = $_POST['widyaiswara'];
+  $penyelenggara = $_POST['listP'];
 	$pilihan = $_POST['pilihan'];
 	$tahun = date("Y");
 	$tahunbulan = date("Y")."-".date("m");
 	
 	$cek = 0;
+
+  $total = 0;
 ?>
 <html>
 <style>
   .searchoption {
-    margin-left:60%;
+    margin-left:80%;
   }
 </style>
-<style>
+<!-- <style>
   .searchoptionP {
     margin-left:80%;
     margin-top:-12%;
   }
-</style>
+</style> -->
 
 <datalist id="listWI">
 	<?php while ($row = mysqli_fetch_array($data)) { ?>
@@ -126,6 +129,7 @@
 		  <div class="form-group">
 			  
 				<input type="text" placeholder="Masukkan Nama" list="listWI" name="widyaiswara">
+        <input type="text" placeholder="Nama Penyelenggara" list="listP" name="listP">
 				
 			  
 		  </div>
@@ -140,7 +144,7 @@
 		   </div>
 	   </form>
 
-     <form class="searchoptionP" action="resultP.php" method="Post">
+    <!--  <form class="searchoptionP" action="resultP.php" method="Post">
       <div class="form-group">
         
         <input type="text" placeholder="Nama Penyelenggara" list="listP" name="listP">
@@ -156,7 +160,7 @@
        <div class="form-group">
         <input type="submit" value="Cari Penyelenggara">
        </div>
-     </form>
+     </form> -->
 	   
 	   
     </section>
@@ -183,88 +187,265 @@
                 </thead>
                 <tbody>
                 <?php
-					
-					if ($pilihan == "bulan") {
-						$total = 0;
-						$data = mysqli_query($connection , "SELECT * from jadwal where widyaiswara='".$widyaiswara."' order by tanggal desc, waktu_mulai");
-						if (mysqli_num_rows($data) == 0) { 
-						?>
-							<h1 style="color:red;">Data tidak ditemukan</h1>
-						<?php
-						}
-						else {
-							$totalData = 0;
-							while ($dt = mysqli_fetch_array($data)) {
-								if (substr($dt['tanggal'],0,7) == $tahunbulan) {
-									echo "<tr>
-											<td align='center'>$dt[hari] / $dt[tanggal]</td>
-											<td align='center'>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
-											<td align='center'>$dt[nama_diklat]</td>
-											<td align='center'>$dt[kegiatan]</td>
-                      <td align='center'>$dt[penyelenggara]</td>
-											<td align='center'>$dt[jumlah_jp]</td>
-											<td align='center'>$dt[widyaiswara]</td>
-											<td align='center'>";
-                      echo "<a href='javascript:deleteConfirm(".$dt['id_jadwal'].")' class='btn btn-danger'>
-												<i class='glyphicon glyphicon-trash'></i>
-												</a>";
-                      echo "<a href='edit.php?id_jadwal=".$dt['id_jadwal']."' class='btn btn-alert'>";
-												echo "<i class='glyphicon glyphicon-edit'></i>
-												</a>
-											</td>
-										</tr>";
-									$total = $total + $dt['jumlah_jp'];
-									$totalData = $totalData + 1;
-								}
-							}
-							if ($totalData == 0) {
-								?>
-									<h1 style="color:red;">Data tidak ditemukan</h1>
-								<?php
-							}
-						}
-						
-					}
-					else if ($pilihan == "tahun") {
-						$total = 0;
-						$data = mysqli_query($connection , "SELECT * from jadwal where widyaiswara='".$widyaiswara."' order by tanggal desc, waktu_mulai");
-						if (mysqli_num_rows($data) == 0) { 
-						?>
-							<h1 style="color:red;">Data tidak ditemukan</h1>
-						<?php
-						}
-						else {
-							$totalData = 0;
-							while ($dt = mysqli_fetch_array($data)) {
-								if (substr($dt['tanggal'],0,4) == $tahun) {
-									echo "<tr>
-											<td align='center'>$dt[hari] / $dt[tanggal]</td>
-											<td align='center'>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
-											<td align='center'>$dt[nama_diklat]</td>
-                      <td align='center'>$dt[kegiatan]</td>
-                      <td align='center'>$dt[penyelenggara]</td>
-											<td align='center'>$dt[jumlah_jp]</td>
-											<td align='center'>$dt[widyaiswara]</td>
-											<td align='center'>";
-                      echo "<a href='javascript:deleteConfirm(".$dt['id_jadwal'].")' class='btn btn-danger'>
-                        <i class='glyphicon glyphicon-trash'></i>
-                        </a>";
-                      echo "<a href='edit.php?id_jadwal=".$dt['id_jadwal']."' class='btn btn-alert'>";
-                        echo "<i class='glyphicon glyphicon-edit'></i>
-                        </a>
-                      </td>
-										</tr>";
-									$total = $total + $dt['jumlah_jp'];
-									$totalData = $totalData + 1;
-								}
-							}
-							if ($totalData == 0) {
-								?>
-									<h1 style="color:red;">Data tidak ditemukan</h1>
-								<?php
-							}
-						}
-					}
+
+                if ($widyaiswara != "") {
+                  if ($penyelenggara != "") {
+                    if ($pilihan == "bulan") {
+                      $total = 0;
+                      $data = mysqli_query($connection , "SELECT * from jadwal where widyaiswara='".$widyaiswara."' and penyelenggara='".$penyelenggara."' order by tanggal desc, waktu_mulai");
+                      if (mysqli_num_rows($data) == 0) { 
+                      ?>
+                        <h1 style="color:red;">Data tidak ditemukan</h1>
+                      <?php
+                      }
+                      else {
+                        $totalData = 0;
+                        while ($dt = mysqli_fetch_array($data)) {
+                          if (substr($dt['tanggal'],0,7) == $tahunbulan) {
+                            echo "<tr>
+                                <td align='center'>$dt[hari] / $dt[tanggal]</td>
+                                <td align='center'>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
+                                <td align='center'>$dt[nama_diklat]</td>
+                                <td align='center'>$dt[kegiatan]</td>
+                                <td align='center'>$dt[penyelenggara]</td>
+                                <td align='center'>$dt[jumlah_jp]</td>
+                                <td align='center'>$dt[widyaiswara]</td>
+                                <td align='center'>";
+                                echo "<a href='javascript:deleteConfirm(".$dt['id_jadwal'].")' class='btn btn-danger'>
+                                  <i class='glyphicon glyphicon-trash'></i>
+                                  </a>";
+                                echo "<a href='edit.php?id_jadwal=".$dt['id_jadwal']."' class='btn btn-alert'>";
+                                  echo "<i class='glyphicon glyphicon-edit'></i>
+                                  </a>
+                                </td>
+                              </tr>";
+                            $total = $total + $dt['jumlah_jp'];
+                            $totalData = $totalData + 1;
+                          }
+                        }
+                        if ($totalData == 0) {
+                          ?>
+                            <h1 style="color:red;">Data tidak ditemukan</h1>
+                          <?php
+                        }
+                      }
+                      
+                    }
+                    else if ($pilihan == "tahun") {
+                      $total = 0;
+                      $data = mysqli_query($connection , "SELECT * from jadwal where widyaiswara='".$widyaiswara."' and penyelenggara='".$penyelenggara."' order by tanggal desc, waktu_mulai");
+                      if (mysqli_num_rows($data) == 0) { 
+                      ?>
+                        <h1 style="color:red;">Data tidak ditemukan</h1>
+                      <?php
+                      }
+                      else {
+                        $totalData = 0;
+                        while ($dt = mysqli_fetch_array($data)) {
+                          if (substr($dt['tanggal'],0,4) == $tahun) {
+                            echo "<tr>
+                                <td align='center'>$dt[hari] / $dt[tanggal]</td>
+                                <td align='center'>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
+                                <td align='center'>$dt[nama_diklat]</td>
+                                <td align='center'>$dt[kegiatan]</td>
+                                <td align='center'>$dt[penyelenggara]</td>
+                                <td align='center'>$dt[jumlah_jp]</td>
+                                <td align='center'>$dt[widyaiswara]</td>
+                                <td align='center'>";
+                                echo "<a href='javascript:deleteConfirm(".$dt['id_jadwal'].")' class='btn btn-danger'>
+                                  <i class='glyphicon glyphicon-trash'></i>
+                                  </a>";
+                                echo "<a href='edit.php?id_jadwal=".$dt['id_jadwal']."' class='btn btn-alert'>";
+                                  echo "<i class='glyphicon glyphicon-edit'></i>
+                                  </a>
+                                </td>
+                              </tr>";
+                            $total = $total + $dt['jumlah_jp'];
+                            $totalData = $totalData + 1;
+                          }
+                        }
+                        if ($totalData == 0) {
+                          ?>
+                            <h1 style="color:red;">Data tidak ditemukan</h1>
+                          <?php
+                        }
+                      }
+                    }
+                  }
+                  else {
+                    if ($pilihan == "bulan") {
+                      $total = 0;
+                      $data = mysqli_query($connection , "SELECT * from jadwal where widyaiswara='".$widyaiswara."' order by tanggal desc, waktu_mulai");
+                      if (mysqli_num_rows($data) == 0) { 
+                      ?>
+                        <h1 style="color:red;">Data tidak ditemukan</h1>
+                      <?php
+                      }
+                      else {
+                        $totalData = 0;
+                        while ($dt = mysqli_fetch_array($data)) {
+                          if (substr($dt['tanggal'],0,7) == $tahunbulan) {
+                            echo "<tr>
+                                <td align='center'>$dt[hari] / $dt[tanggal]</td>
+                                <td align='center'>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
+                                <td align='center'>$dt[nama_diklat]</td>
+                                <td align='center'>$dt[kegiatan]</td>
+                                <td align='center'>$dt[penyelenggara]</td>
+                                <td align='center'>$dt[jumlah_jp]</td>
+                                <td align='center'>$dt[widyaiswara]</td>
+                                <td align='center'>";
+                                echo "<a href='javascript:deleteConfirm(".$dt['id_jadwal'].")' class='btn btn-danger'>
+                                  <i class='glyphicon glyphicon-trash'></i>
+                                  </a>";
+                                echo "<a href='edit.php?id_jadwal=".$dt['id_jadwal']."' class='btn btn-alert'>";
+                                  echo "<i class='glyphicon glyphicon-edit'></i>
+                                  </a>
+                                </td>
+                              </tr>";
+                            $total = $total + $dt['jumlah_jp'];
+                            $totalData = $totalData + 1;
+                          }
+                        }
+                        if ($totalData == 0) {
+                          ?>
+                            <h1 style="color:red;">Data tidak ditemukan</h1>
+                          <?php
+                        }
+                      }
+                      
+                    }
+                    else if ($pilihan == "tahun") {
+                      $total = 0;
+                      $data = mysqli_query($connection , "SELECT * from jadwal where widyaiswara='".$widyaiswara."' order by tanggal desc, waktu_mulai");
+                      if (mysqli_num_rows($data) == 0) { 
+                      ?>
+                        <h1 style="color:red;">Data tidak ditemukan</h1>
+                      <?php
+                      }
+                      else {
+                        $totalData = 0;
+                        while ($dt = mysqli_fetch_array($data)) {
+                          if (substr($dt['tanggal'],0,4) == $tahun) {
+                            echo "<tr>
+                                <td align='center'>$dt[hari] / $dt[tanggal]</td>
+                                <td align='center'>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
+                                <td align='center'>$dt[nama_diklat]</td>
+                                <td align='center'>$dt[kegiatan]</td>
+                                <td align='center'>$dt[penyelenggara]</td>
+                                <td align='center'>$dt[jumlah_jp]</td>
+                                <td align='center'>$dt[widyaiswara]</td>
+                                <td align='center'>";
+                                echo "<a href='javascript:deleteConfirm(".$dt['id_jadwal'].")' class='btn btn-danger'>
+                                  <i class='glyphicon glyphicon-trash'></i>
+                                  </a>";
+                                echo "<a href='edit.php?id_jadwal=".$dt['id_jadwal']."' class='btn btn-alert'>";
+                                  echo "<i class='glyphicon glyphicon-edit'></i>
+                                  </a>
+                                </td>
+                              </tr>";
+                            $total = $total + $dt['jumlah_jp'];
+                            $totalData = $totalData + 1;
+                          }
+                        }
+                        if ($totalData == 0) {
+                          ?>
+                            <h1 style="color:red;">Data tidak ditemukan</h1>
+                          <?php
+                        }
+                      }
+                    }
+                  }
+                }
+                else {
+                  if ($penyelenggara != "") {
+                    if ($pilihan == "bulan") {
+                      $total = 0;
+                      $data = mysqli_query($connection , "SELECT * from jadwal where penyelenggara='".$penyelenggara."' order by tanggal desc, waktu_mulai");
+                      if (mysqli_num_rows($data) == 0) { 
+                      ?>
+                        <h1 style="color:red;">Data tidak ditemukan</h1>
+                      <?php
+                      }
+                      else {
+                        $totalData = 0;
+                        while ($dt = mysqli_fetch_array($data)) {
+                          if (substr($dt['tanggal'],0,7) == $tahunbulan) {
+                            echo "<tr>
+                                <td align='center'>$dt[hari] / $dt[tanggal]</td>
+                                <td align='center'>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
+                                <td align='center'>$dt[nama_diklat]</td>
+                                <td align='center'>$dt[kegiatan]</td>
+                                <td align='center'>$dt[penyelenggara]</td>
+                                <td align='center'>$dt[jumlah_jp]</td>
+                                <td align='center'>$dt[widyaiswara]</td>
+                                <td align='center'>";
+                                echo "<a href='javascript:deleteConfirm(".$dt['id_jadwal'].")' class='btn btn-danger'>
+                                  <i class='glyphicon glyphicon-trash'></i>
+                                  </a>";
+                                echo "<a href='edit.php?id_jadwal=".$dt['id_jadwal']."' class='btn btn-alert'>";
+                                  echo "<i class='glyphicon glyphicon-edit'></i>
+                                  </a>
+                                </td>
+                              </tr>";
+                            $total = $total + $dt['jumlah_jp'];
+                            $totalData = $totalData + 1;
+                          }
+                        }
+                        if ($totalData == 0) {
+                          ?>
+                            <h1 style="color:red;">Data tidak ditemukan</h1>
+                          <?php
+                        }
+                      }
+                      
+                    }
+                    else if ($pilihan == "tahun") {
+                      $total = 0;
+                      $data = mysqli_query($connection , "SELECT * from jadwal where penyelenggara='".$penyelenggara."' order by tanggal desc, waktu_mulai");
+                      if (mysqli_num_rows($data) == 0) { 
+                      ?>
+                        <h1 style="color:red;">Data tidak ditemukan</h1>
+                      <?php
+                      }
+                      else {
+                        $totalData = 0;
+                        while ($dt = mysqli_fetch_array($data)) {
+                          if (substr($dt['tanggal'],0,4) == $tahun) {
+                            echo "<tr>
+                                <td align='center'>$dt[hari] / $dt[tanggal]</td>
+                                <td align='center'>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
+                                <td align='center'>$dt[nama_diklat]</td>
+                                <td align='center'>$dt[kegiatan]</td>
+                                <td align='center'>$dt[penyelenggara]</td>
+                                <td align='center'>$dt[jumlah_jp]</td>
+                                <td align='center'>$dt[widyaiswara]</td>
+                                <td align='center'>";
+                                echo "<a href='javascript:deleteConfirm(".$dt['id_jadwal'].")' class='btn btn-danger'>
+                                  <i class='glyphicon glyphicon-trash'></i>
+                                  </a>";
+                                echo "<a href='edit.php?id_jadwal=".$dt['id_jadwal']."' class='btn btn-alert'>";
+                                  echo "<i class='glyphicon glyphicon-edit'></i>
+                                  </a>
+                                </td>
+                              </tr>";
+                            $total = $total + $dt['jumlah_jp'];
+                            $totalData = $totalData + 1;
+                          }
+                        }
+                        if ($totalData == 0) {
+                          ?>
+                            <h1 style="color:red;">Data tidak ditemukan</h1>
+                          <?php
+                        }
+                      }
+                    }
+                  }
+                  else {
+                    ?>
+                      <h1 style="color:red;">Data tidak ditemukan</h1>
+                    <?php
+                  }
+                }
 				?>
 				<th colspan="4"> Total JP</th>
 				<th><?php echo $total ?> </th>

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <?php
-	define('BASE_URL', 'http://localhost:81/diklat/');
 	$connection=mysqli_connect("127.0.0.1", "root", "", "diklatmedan");
 	mysqli_select_db($connection, "");
 	$query=mysqli_query($connection, "SELECT * FROM jadwal order by tanggal desc, waktu_mulai");
@@ -9,15 +8,15 @@
 <html>
 <style>
 	.searchoption {
-		margin-left:60%;
+		margin-left:80%;
 	}
 </style>
-<style>
+<!-- <style>
   .searchoptionP {
     margin-left:80%;
     margin-top:-12%;
   }
-</style>
+</style> -->
 
 <datalist id="listWI">
 	<?php while ($row = mysqli_fetch_array($data)) { ?>
@@ -120,7 +119,7 @@
 		  <div class="form-group">
 			  
 				<input type="text" placeholder="Nama Widyaiswara" list="listWI" name="widyaiswara">
-				
+				<input type="text" placeholder="Nama Penyelenggara" list="listP" name="listP">
 			  
 		  </div>
 		  <div class="form-group">
@@ -134,7 +133,7 @@
 		   </div>
 	   </form>
 
-    <form class="searchoptionP" action="resultP.php" method="Post">
+    <!-- <form class="searchoptionP" action="resultP.php" method="Post">
       <div class="form-group">
         
         <input type="text" placeholder="Nama Penyelenggara" list="listP" name="listP">
@@ -150,7 +149,7 @@
        <div class="form-group">
         <input type="submit" value="Cari Penyelenggara">
        </div>
-     </form>
+     </form> -->
 	   
 	   
     </section>
