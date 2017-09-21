@@ -102,7 +102,7 @@
         <div class="box-body">
 
           <div class="form-group">
-            <label for="tanggal_berjalan" class="col-sm-2 control-label">Tanggal Berjalan</label>
+            <label for="tanggal_berjalan" class="col-sm-2 control-label">Tanggal Cetak</label>
 
             <div class="col-sm-10">
               <input type="date" class="form-control" id="datepicker4" name="tanggal_berjalan" required>

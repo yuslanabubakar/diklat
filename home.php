@@ -142,7 +142,7 @@
 				while($data=mysqli_fetch_array($query)){
 				?>
 							<tr>
-							<td align='center'><?php echo $data['hari'] . '/' . $data['tanggal']; ?></td>
+							<td align='center'><?php echo $data['hari'] . '/' . date('d-m-Y',strtotime($data['tanggal'])); ?></td>
 							<td align='center'><?php echo $data['waktu_mulai'] . '-' . $data['waktu_selesai']; ?></td>
 							<td align='center'><?php echo $data['nama_diklat']; ?></td>
 							<td align='center'><?php echo $data['kegiatan']; ?></td>
