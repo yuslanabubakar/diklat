@@ -79,6 +79,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li><a href="home.php"><i class="fa fa-fw fa-desktop"></i> <span>Halaman Utama</span></a></li>
+        <li><a href="cariJadwalWI.php"><i class="fa fa-search"></i> <span>Cari Jadwal Widyaiswara</span></a></li>
         <li><a href="input_jadwal.php"><i class="fa fa-book"></i> <span>Input Jadwal</span></a></li>
         <li><a href="dataWidyaiswara.php"><i class="fa fa-user" aria-hidden="true"></i> <span>Data Widyaiswara</span></a></li>
         <li><a href="laporan.php"><i class="fa fa-file" aria-hidden="true"></i> <span>Cetak Laporan</span></a></li>
@@ -132,7 +133,7 @@
           </div>
 		  
 		      <div class="form-group">
-            <label for="nama_diklat" class="col-sm-2 control-label">Mata Pelajaran</label>
+            <label for="nama_diklat" class="col-sm-2 control-label">Nama Diklat</label>
 
             <div class="col-sm-10">
               <input type="text" class="form-control" id="nama_diklat" name="nama_diklat" required>
@@ -140,7 +141,7 @@
           </div>
 		  
 		      <div class="form-group">
-            <label for="kegiatan" class="col-sm-2 control-label">Kegiatan</label>
+            <label for="kegiatan" class="col-sm-2 control-label">Kegiatan/Mata Diklat</label>
 
             <div class="col-sm-10">
               <input type="text" class="form-control" id="kegiatan" name="kegiatan" required>
@@ -159,7 +160,7 @@
               </div>  
           </div>
 		
-			<div class="form-group">
+			     <div class="form-group">
               <label for="inputWI" class="col-sm-2 control-label">WidyaIswara</label>
 			
               <div class="col-sm-10">

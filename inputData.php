@@ -40,7 +40,8 @@
 			if (
 			($waktuMulai < $strjamselesai && $waktuMulai > $strjammulai) ||
 			($waktuMulai > $waktuSelesai) ||
-			($waktuSelesai > $strjammulai && $waktuSelesai < $strjamselesai)
+			($waktuMulai == $strjammulai && $waktuSelesai == $strjamselesai) ||
+			($waktuSelesai > $strjammulai && $waktuSelesai < $strjamselesai) || ($waktuMulai < $strjammulai && $waktuSelesai > $strjamselesai)
 			
 			) {
 			  $cek = 0;

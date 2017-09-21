@@ -2,36 +2,10 @@
 <?php
 	$connection=mysqli_connect("127.0.0.1", "root", "", "diklatmedan");
 	mysqli_select_db($connection, "");
-	$query=mysqli_query($connection, "SELECT * FROM jadwal order by tanggal desc, waktu_mulai");
-	$data = mysqli_query($connection, "SELECT nama FROM pengajar");
+	$query=mysqli_query($connection, "SELECT * FROM jadwal group by penyelenggara order by tanggal desc, waktu_mulai");
+	$data = mysqli_query($connection, "SELECT * FROM pengajar");
 ?>
 <html>
-<style>
-	.searchoption {
-		margin-left:80%;
-	}
-</style>
-<!-- <style>
-  .searchoptionP {
-    margin-left:80%;
-    margin-top:-12%;
-  }
-</style> -->
-
-<datalist id="listWI">
-	<?php while ($row = mysqli_fetch_array($data)) { ?>
-	<option value = "<?php echo $row['nama']; ?>">
-	<?php } ?>
-</datalist>
-
-<datalist id="listP">
-  <?php 
-  $dataP = mysqli_query($connection , "SELECT penyelenggara FROM jadwal group by penyelenggara");
-  while ($row = mysqli_fetch_array($dataP)) { ?>
-  <option value = "<?php echo $row['penyelenggara']; ?>">
-  <?php } ?>
-</datalist>
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -65,6 +39,12 @@
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
   <link rel="stylesheet" type="text/css" href="daterangepicker.css" />
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <link rel="stylesheet" href="/resources/demos/style.css">
+
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -112,69 +92,91 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-	   
+      <h1>
+        Cari Jadwal Widyaiswara
+        <br>
+        <br>
+      </h1>
     </section>
-  
+  <div class="col-md-9">
+    <div class="box box-info">
+      <form class="form-horizontal" method="post" action="result.php">
+        <div class="box-body">
+
+          <div class="form-group">
+              <label for="inputWI" class="col-sm-2 control-label">WidyaIswara</label>
+      
+              <div class="col-sm-10">
+                <select class="form-control" id="inputWI" name="inputWI">
+                  <option></option>
+                  <?php while ($dt = mysqli_fetch_array($data)) { ?>
+                  <option>
+                      <?php echo $dt['nama']; ?>
+                  </option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+		  
+		      <div class="form-group">
+              <label for="penyelenggara" class="col-sm-2 control-label">Penyelenggara</label>
+      
+              <div class="col-sm-10">
+                <select class="form-control" id="penyelenggara" name="penyelenggara">
+                  <option></option>
+                  <?php while ($dt = mysqli_fetch_array($query)) { ?>
+                  <option>
+                      <?php echo $dt['penyelenggara']; ?>
+                  </option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+
+          <div class="form-group">
+              <label for="pencarian" class="col-sm-2 control-label">Pencarian</label>
+      
+              <div class="col-sm-10">
+                <select class="form-control" id="pencarian" name="pencarian" required onchange="tampil()">
+                  <option value="kosong">----------Pilihan----------</option>
+                  <option value="bulan">Berdasarkan Bulan</option>
+                  <option value="tahun">Berdasarkan Tahun</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group" id="pencarianBulan" style="display: none">
+              <label for="pencarianBulan" class="col-sm-2 control-label"></label>
+      
+              <div class="col-sm-10">
+                <select class="form-control" id="pencarianBulan" name="pencarianBulan">
+                  <?php for ($i=1; $i <= 12 ; $i++) { ?>
+                    <option value="<?php echo $i; ?>"><?php echo "Bulan-".$i; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+          
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <button type="reset" class="btn btn-default">Reset</button>
+            <button type="submit" class="btn btn-info pull-right">Cari</button>
+          </div>
+          <!-- /.box-footer -->
+      </form>
+    </div>
+  </div>
     <!-- Main content -->
     <section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th style="text-align:center" width="18%">HARI / TANGGAL</th>
-                  <th style="text-align:center" width="13%">WAKTU</th>
-				          <th style="text-align:center" width="15%">NAMA DIKLAT</th>
-                  <th style="text-align:center" width="15%">KEGIATAN / MATA DIKLAT</th>
-                  <th style="text-align:center" width="7%">PENYELENGGARA</th>
-        				  <th style="text-align:center" width="10%">JLH JP</th>
-        				  <th style="text-align:center" width="22%">WIDYAISWARA</th>
-        				  <th style="text-align:center" width="15%">AKSI</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-					// $data=mysqli_fetch_array($query);
-					// print_r($data);
-				while($data=mysqli_fetch_array($query)){
-				?>
-							<tr>
-							<td align='center'><?php echo $data['hari'] . '/' . $data['tanggal']; ?></td>
-							<td align='center'><?php echo $data['waktu_mulai'] . '-' . $data['waktu_selesai']; ?></td>
-							<td align='center'><?php echo $data['nama_diklat']; ?></td>
-							<td align='center'><?php echo $data['kegiatan']; ?></td>
-              <td align='center'><?php echo $data['penyelenggara']; ?></td>
-							<td align='center'><?php echo $data['jumlah_jp']; ?></td>
-							<td align='center'><?php echo $data['widyaiswara']; ?></td>
-                <input type="hidden" id="id_jadwal" class="idjadwal" value="<?php echo $data['id_jadwal']; ?>">
-              <td align='center'>
-                <a href='javascript:deleteConfirm(<?php echo $data['id_jadwal']; ?>)' class='btn btn-danger'>
-                <i class='glyphicon glyphicon-trash'></i>
-                </a>
-                <a href='edit.php?id_jadwal=<?php echo $data['id_jadwal']; ?>' class='btn btn-alert'>
-                <i class='glyphicon glyphicon-edit'></i>
-                </a>
-              </td>
-						</tr>
-				<?php
-				}
-				?>
-                </tbody>
-                <tfoot>
-                </tfoot>
-              </table>
-
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-      </div>
+      <!-- Small boxes (Stat box) -->
+      
       <!-- /.row -->
+      <!-- Main row -->
+      <div class="row">
+      </div>
+      <!-- /.row (main row) -->
+
     </section>
     <!-- /.content -->
   </div>
@@ -239,23 +241,21 @@
 
 <script type="text/javascript" src="daterangepicker.js"></script>
 
-
-
-
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
 <script>
-function deleteConfirm(tes) {
-  // var id_jadwal = document.getElementById('id_jadwal').value;
-  // var id_jadwal = $(".idjadwal").val();
-  // alert(tes);
-  var r = confirm("Yakin ingin menghapus data ?");
-  if (r == true) {
-      $.post( "delete.php", { id_jadwal : tes })
-      .done(function( data ) {
-        location.reload();
-      });
-  } 
-}
+  function tampil() {
+    if (document.getElementById('pencarian').value == "bulan") {
+      var x = document.getElementById('pencarianBulan');
+      x.style.display = 'block';
+    }
+    else {
+      var x = document.getElementById('pencarianBulan');
+      x.style.display = 'none';
+    }
+  }
 </script>
 
 </body>

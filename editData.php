@@ -17,13 +17,14 @@
 	$namaDiklat = mysql_real_escape_string($_POST['nama_diklat']);
 	$kegiatan = mysql_real_escape_string($_POST['kegiatan']);
 	$jumlahJP = mysql_real_escape_string($_POST['listJP']);
+	$wi = $_POST['inputWI'];
 
-	$wi = "";
+	// $wi = "";
 
-	$query = mysqli_query($connection , "SELECT * FROM jadwal where id_jadwal=" . $id_jadwal);
-	while ($data = mysqli_fetch_array($query)) {
-		$wi = $data['widyaiswara'];
-	}
+	// $query = mysqli_query($connection , "SELECT * FROM jadwal where id_jadwal=" . $id_jadwal);
+	// while ($data = mysqli_fetch_array($query)) {
+	// 	$wi = $data['widyaiswara'];
+	// }
 
 	$getData 	= mysqli_query($connection , "SELECT * FROM jadwal WHERE  widyaiswara = '".$wi."' order by tanggal desc, waktu_mulai");
 	$cek 		= 1;
@@ -38,7 +39,7 @@
 			if (
 			($waktuMulai < $strjamselesai && $waktuMulai > $strjammulai) ||
 			($waktuMulai > $waktuSelesai) ||
-			($waktuSelesai > $strjammulai && $waktuSelesai < $strjamselesai)
+			($waktuSelesai > $strjammulai && $waktuSelesai < $strjamselesai) || ($waktuMulai < $strjammulai && $waktuSelesai > $strjamselesai)
 			
 			) {
 			  $cek = 0;

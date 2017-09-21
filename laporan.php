@@ -78,6 +78,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li><a href="home.php"><i class="fa fa-fw fa-desktop"></i> <span>Halaman Utama</span></a></li>
+        <li><a href="cariJadwalWI.php"><i class="fa fa-search"></i> <span>Cari Jadwal Widyaiswara</span></a></li>
         <li><a href="input_jadwal.php"><i class="fa fa-book"></i> <span>Input Jadwal</span></a></li>
         <li><a href="dataWidyaiswara.php"><i class="fa fa-user" aria-hidden="true"></i> <span>Data Widyaiswara</span></a></li>
         <li><a href="laporan.php"><i class="fa fa-file" aria-hidden="true"></i> <span>Cetak Laporan</span></a></li>
@@ -99,6 +100,14 @@
     <div class="box box-info">
       <form class="form-horizontal" method="post" action="cetakLaporan.php">
         <div class="box-body">
+
+          <div class="form-group">
+            <label for="tanggal_berjalan" class="col-sm-2 control-label">Tanggal Berjalan</label>
+
+            <div class="col-sm-10">
+              <input type="date" class="form-control" id="datepicker4" name="tanggal_berjalan" required>
+            </div>
+          </div>
 		  
 		  <div class="form-group">
             <label for="nip_wi" class="col-sm-2 control-label">Nama Diklat</label>
@@ -272,6 +281,11 @@
    });
    $( function() {
     $( "#datepicker3" ).datepicker({
+      dateFormat:'yy-mm-dd'
+      });
+   });
+   $( function() {
+    $( "#datepicker4" ).datepicker({
       dateFormat:'yy-mm-dd'
       });
    });

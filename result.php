@@ -5,11 +5,11 @@
 	$query=mysqli_query($connection, "SELECT * FROM jadwal");
 	$data = mysqli_query($connection, "SELECT nama FROM pengajar");
 	
-	$widyaiswara = $_POST['widyaiswara'];
-  $penyelenggara = $_POST['listP'];
-	$pilihan = $_POST['pilihan'];
+	$widyaiswara = $_POST['inputWI'];
+  $penyelenggara = $_POST['penyelenggara'];
+	$pilihan = $_POST['pencarian'];
 	$tahun = date("Y");
-	$tahunbulan = date("Y")."-".date("m");
+	$bulan = $_POST['pencarianBulan'];
 	
 	$cek = 0;
 
@@ -21,26 +21,6 @@
     margin-left:80%;
   }
 </style>
-<!-- <style>
-  .searchoptionP {
-    margin-left:80%;
-    margin-top:-12%;
-  }
-</style> -->
-
-<datalist id="listWI">
-	<?php while ($row = mysqli_fetch_array($data)) { ?>
-	<option value = "<?php echo $row['nama']; ?>">
-	<?php } ?>
-</datalist>
-
-<datalist id="listP">
-  <?php 
-  $dataP = mysqli_query($connection , "SELECT penyelenggara FROM jadwal group by penyelenggara");
-  while ($row = mysqli_fetch_array($dataP)) { ?>
-  <option value = "<?php echo $row['penyelenggara']; ?>">
-  <?php } ?>
-</datalist>
 
 <head>
   <meta charset="utf-8">
@@ -109,6 +89,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li><a href="home.php"><i class="fa fa-fw fa-desktop"></i> <span>Halaman Utama</span></a></li>
+        <li><a href="cariJadwalWI.php"><i class="fa fa-search"></i> <span>Cari Jadwal Widyaiswara</span></a></li>
         <li><a href="input_jadwal.php"><i class="fa fa-book"></i> <span>Input Jadwal</span></a></li>
         <li><a href="dataWidyaiswara.php"><i class="fa fa-user" aria-hidden="true"></i> <span>Data Widyaiswara</span></a></li>
         <li><a href="laporan.php"><i class="fa fa-file" aria-hidden="true"></i> <span>Cetak Laporan</span></a></li>
@@ -121,48 +102,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        JADWAL / KEGIATAN
-      </h1>
-	  <h5 class="searchoption"><b>Pencarian : </b></h5>
-	  <form class="searchoption" action="result.php" method="Post">
-		  <div class="form-group">
-			  
-				<input type="text" placeholder="Masukkan Nama" list="listWI" name="widyaiswara">
-        <input type="text" placeholder="Nama Penyelenggara" list="listP" name="listP">
-				
-			  
-		  </div>
-		  <div class="form-group">
-				<select name="pilihan">
-					<option value="bulan">Cari Berdasarkan Bulan</option>
-					<option value="tahun">Cari Berdasarkan Tahun</option>	
-				</select>
-		   </div>
-		   <div class="form-group">
-				<input type="submit" value="Cari">
-		   </div>
-	   </form>
-
-    <!--  <form class="searchoptionP" action="resultP.php" method="Post">
-      <div class="form-group">
-        
-        <input type="text" placeholder="Nama Penyelenggara" list="listP" name="listP">
-        
-        
-      </div>
-      <div class="form-group">
-        <select name="pilihanP">
-          <option value="bulan">Cari Berdasarkan Bulan</option>
-          <option value="tahun">Cari Berdasarkan Tahun</option> 
-        </select>
-       </div>
-       <div class="form-group">
-        <input type="submit" value="Cari Penyelenggara">
-       </div>
-     </form> -->
-	   
-	   
+     
     </section>
   
     <!-- Main content -->
@@ -177,8 +117,8 @@
                 <tr>
                   <th style="text-align:center" width="18%">HARI / TANGGAL</th>
                   <th style="text-align:center" width="13%">WAKTU</th>
-                  <th style="text-align:center" width="15%">MATA PELAJARAN</th>
-                  <th style="text-align:center" width="15%">KEGIATAN</th>
+                  <th style="text-align:center" width="15%">NAMA DIKLAT</th>
+                  <th style="text-align:center" width="15%">KEGIATAN / MATA DIKLAT</th>
                   <th style="text-align:center" width="7%">PENYELENGGARA</th>
                   <th style="text-align:center" width="10%">JLH JP</th>
                   <th style="text-align:center" width="22%">WIDYAISWARA</th>
@@ -201,7 +141,7 @@
                       else {
                         $totalData = 0;
                         while ($dt = mysqli_fetch_array($data)) {
-                          if (substr($dt['tanggal'],0,7) == $tahunbulan) {
+                          if (substr($dt['tanggal'],5,2) == $bulan) {
                             echo "<tr>
                                 <td align='center'>$dt[hari] / $dt[tanggal]</td>
                                 <td align='center'>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
@@ -284,7 +224,7 @@
                       else {
                         $totalData = 0;
                         while ($dt = mysqli_fetch_array($data)) {
-                          if (substr($dt['tanggal'],0,7) == $tahunbulan) {
+                          if (substr($dt['tanggal'],5,2) == $bulan) {
                             echo "<tr>
                                 <td align='center'>$dt[hari] / $dt[tanggal]</td>
                                 <td align='center'>$dt[waktu_mulai] - $dt[waktu_selesai]</td>
@@ -369,7 +309,7 @@
                       else {
                         $totalData = 0;
                         while ($dt = mysqli_fetch_array($data)) {
-                          if (substr($dt['tanggal'],0,7) == $tahunbulan) {
+                          if (substr($dt['tanggal'],5,2) == $bulan) {
                             echo "<tr>
                                 <td align='center'>$dt[hari] / $dt[tanggal]</td>
                                 <td align='center'>$dt[waktu_mulai] - $dt[waktu_selesai]</td>

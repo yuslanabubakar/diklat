@@ -3,11 +3,11 @@
 	$connection=mysqli_connect("127.0.0.1", "root", "", "diklatmedan");
 	mysqli_select_db($connection, "");
 
-	$day = date('w');
+	$day = date('w',strtotime($_POST['tanggal_berjalan']));
 	$week_start = date('Y-m-d', strtotime('-'.($day-1).' days'));
 	$week_end = date('Y-m-d', strtotime('+'.(6-$day).' days'));
 	$minggu = date('d-m-Y', strtotime('+'.(7-$day).' days'));
-	
+
 	$nama_diklat = $_POST['listDiklat'];
 	$no_dokumen = $_POST['no_dokumen'];
 	$no_revisi = $_POST['no_revisi'];
@@ -23,6 +23,8 @@
 	    printf("Error: %s\n", mysqli_error($connection));
 	    exit();
 	}
+
+	echo $day . " " . $week_start . " " . $week_end;
 
 ?>
 

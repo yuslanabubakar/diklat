@@ -4,6 +4,7 @@
 	$connection=mysqli_connect("127.0.0.1", "root", "", "diklatmedan");
 	mysqli_select_db($connection, "");
 	$query=mysqli_query($connection, "SELECT * FROM jadwal where id_jadwal=" . $id_jadwal);
+  $wi=mysqli_query($connection , "SELECT * FROM pengajar");
 
   $tanggal = "";
   $waktuMulai = "";
@@ -11,6 +12,7 @@
   $penyelenggara = "";
   $namaDiklat = "";
   $namaKegiatan = "";
+  $widyaiswara = "";
   $jumlahJP = 0;
 
   while ($data = mysqli_fetch_array($query)) {
@@ -20,6 +22,7 @@
     $penyelenggara = $data['penyelenggara'];
     $namaDiklat = $data['nama_diklat'];
     $namaKegiatan = $data['kegiatan'];
+    $widyaiswara = $data['widyaiswara'];
     $jumlahJP = $data['jumlah_jp'];
   }
 
@@ -99,6 +102,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li><a href="home.php"><i class="fa fa-fw fa-desktop"></i> <span>Halaman Utama</span></a></li>
+        <li><a href="cariJadwalWI.php"><i class="fa fa-search"></i> <span>Cari Jadwal Widyaiswara</span></a></li>
         <li><a href="input_jadwal.php"><i class="fa fa-book"></i> <span>Input Jadwal</span></a></li>
         <li><a href="dataWidyaiswara.php"><i class="fa fa-user" aria-hidden="true"></i> <span>Data Widyaiswara</span></a></li>
         <li><a href="laporan.php"><i class="fa fa-file" aria-hidden="true"></i> <span>Cetak Laporan</span></a></li>
@@ -152,15 +156,15 @@
           </div>
 		  
 		      <div class="form-group">
-            <label for="nama_diklat" class="col-sm-2 control-label">Mata Pelajaran</label>
+            <label for="nama_diklat" class="col-sm-2 control-label">Nama Diklat</label>
 
             <div class="col-sm-10">
               <input type="text" class="form-control" id="nama_diklat" name="nama_diklat" value="<?php echo $namaDiklat; ?>" required>
             </div>
           </div>
 		  
-		  <div class="form-group">
-            <label for="kegiatan" class="col-sm-2 control-label">Kegiatan</label>
+		      <div class="form-group">
+            <label for="kegiatan" class="col-sm-2 control-label">Kegiatan / Mata Diklat</label>
 
             <div class="col-sm-10">
               <input type="text" class="form-control" id="kegiatan" name="kegiatan" value="<?php echo $namaKegiatan; ?>" required>
@@ -178,6 +182,21 @@
                 </select>
               </div>  
           </div>
+
+            <div class="form-group">
+              <label for="inputWI" class="col-sm-2 control-label">WidyaIswara</label>
+              <div class="col-sm-10">
+                <select class="form-control" id="inputWI" name="inputWI" required>
+                  <option><?php echo $widyaiswara; ?></option>
+                  <?php while ($dt = mysqli_fetch_array($wi)) { ?>
+                  <option>
+                      <?php echo $dt['nama']; ?>
+                  </option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
